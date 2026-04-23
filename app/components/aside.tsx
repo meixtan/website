@@ -41,7 +41,9 @@ export default function ProfilePanel() {
             HuggingFace
           </a>
           <a
-            href="/cv"
+            href="/resume.pdf"
+            target="_blank"
+            rel="noreferrer"
             className="text-sm text-gray-600 hover:text-gray-900 dark:text-neutral-100"
           >
             CV
