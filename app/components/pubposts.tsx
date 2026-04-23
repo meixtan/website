@@ -41,6 +41,8 @@ export function PublicationPosts() {
               {post.metadata.press?.map(({ name, link }) => (
                 <Chiclet key={link} text={name} href={link} />
               ))}
+              {post.metadata.awards && [post.metadata.awards].flat().map((award) => (
+                <span key={award} className="inline-block px-2 py-1 rounded-md border border-gray-200 text-gray-600 text-xs font-medium dark:text-neutral-100">{award}</span>))}
             </div>
             <p className="mt-2 text-neutral-700 dark:text-neutral-100 text-sm tracking-tight">
             {post.metadata.authors.map((author, idx) => (

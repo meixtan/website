@@ -9,6 +9,7 @@ type PubMetadata = {
   venues: string[]
   authors: string[]
   pdf: string
+  awards?: string | string[]
   slides?: string
   models?: string
   codeData?: string
