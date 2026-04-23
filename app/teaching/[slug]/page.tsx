@@ -36,7 +36,7 @@ export async function generateMetadata({ params }:{params: Promise<{ slug: strin
       description,
       type: 'article',
       publishedTime,
-      url: `${baseUrl}/publications/${post.slug}`,
+      url: `${baseUrl}/teaching/${post.slug}`,
       images,
     },
     twitter: {
@@ -65,7 +65,7 @@ export default function TeachingResource({ params }: { params: Promise<{ slug: s
             slug={slug}
             title={post.metadata.title}
             summary={post.metadata.summary}
-            sitePath='publications'
+            sitePath='teaching'
             schemaType='LearningResource'
           />
           <h1 className="title text-xl tracking-tighter">
