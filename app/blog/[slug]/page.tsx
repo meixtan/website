@@ -1,7 +1,11 @@
-import { notFound } from 'next/navigation'
+import ProfilePanel from 'app/components/aside'
 import { CustomMDX } from 'app/components/mdx'
-import { formatDate, getBlogPosts } from 'app/blog/utils'
+import Seo from 'app/components/seo'
 import { baseUrl } from 'app/sitemap'
+import { formatDate, getBlogPosts } from 'app/utils'
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import React from 'react'
 
 export async function generateStaticParams() {
   let posts = getBlogPosts()
@@ -11,11 +15,10 @@ export async function generateStaticParams() {
   }))
 }
 
-export function generateMetadata({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug)
-  if (!post) {
-    return
-  }
+export async function generateMetadata({ params }:{params: Promise<{ slug: string }>}): Promise<Metadata> {
+  const { slug } = await params
+  let post = getBlogPosts().find((post) => post.slug === slug)
+  if (!post) return {}
 
   let {
     title,
@@ -51,8 +54,9 @@ export function generateMetadata({ params }) {
   }
 }
 
-export default function Blog({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug)
+export default function Blog({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = React.use(params)
+  let post = getBlogPosts().find((post) => post.slug === slug)
 
   if (!post) {
     notFound()
@@ -60,39 +64,30 @@ export default function Blog({ params }) {
 
   return (
     <section>
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BlogPosting',
-            headline: post.metadata.title,
-            datePublished: post.metadata.publishedAt,
-            dateModified: post.metadata.publishedAt,
-            description: post.metadata.summary,
-            image: post.metadata.image
-              ? `${baseUrl}${post.metadata.image}`
-              : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-            url: `${baseUrl}/blog/${post.slug}`,
-            author: {
-              '@type': 'Person',
-              name: 'My Portfolio',
-            },
-          }),
-        }}
-      />
-      <h1 className="title font-semibold text-2xl tracking-tighter">
-        {post.metadata.title}
-      </h1>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(post.metadata.publishedAt)}
-        </p>
+      <div className="grid grid-cols-1 md:grid-cols-[260px_1fr]">
+        <ProfilePanel />
+        <div>
+          <Seo 
+            slug={slug}
+            title={post.metadata.title}
+            summary={post.metadata.summary}
+            sitePath='blog'
+            schemaType='BlogPosting'
+            publishedAt={post.metadata.publishedAt}
+          />
+          <h1 className="title text-xl tracking-tighter">
+            {post.metadata.title}
+          </h1>
+          <div className="flex justify-between items-center mt-2 mb-8 text-sm">
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              {formatDate(post.metadata.publishedAt)}
+            </p>
+          </div>
+          <article className="prose">
+            <CustomMDX source={post.content} />
+          </article>
+        </div>
       </div>
-      <article className="prose">
-        <CustomMDX source={post.content} />
-      </article>
     </section>
   )
 }

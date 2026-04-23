@@ -148,3 +148,51 @@ table {
 .title {
   text-wrap: balance;
 }
+
+/* style footnotes */
+.footnotes ol {
+  font-size: 0.85em;
+  padding-left: 1rem;
+}
+
+.footnotes li::marker {
+  font-size: 0.85em;
+}
+
+.prose .footnotes p {
+  margin: 0;
+}
+
+.footnotes h2 {
+  font-size: 1.1em; 
+  margin: 1.5rem 0 0.2rem;
+  font-weight: 300;
+}
+
+a[data-footnote-ref],
+.footnote-ref {
+  text-decoration: none;
+}
+
+.footnotes a {
+  text-decoration: none; 
+}
+
+a[data-footnote-backref],
+.footnote-backref {
+  display: none;
+}
+
+/* style blockquotes */
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid rgb(209 213 219); /* gray-300 */
+  font-style: italic;
+  color: rgb(55 65 81); /* gray-700 */
+}
+
+/* Remove extra paragraph spacing inside blockquotes */
+.prose blockquote p {
+  margin: 0;
+}

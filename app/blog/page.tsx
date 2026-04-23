@@ -1,4 +1,5 @@
-import { BlogPosts } from 'app/components/posts'
+import ProfilePanel from 'app/components/aside'
+import { BlogPosts } from 'app/components/blogposts'
 
 export const metadata = {
   title: 'Blog',
@@ -8,8 +9,15 @@ export const metadata = {
 export default function Page() {
   return (
     <section>
-      <h1 className="font-semibold text-2xl mb-8 tracking-tighter">My Blog</h1>
-      <BlogPosts />
+      <div className="grid grid-cols-1 md:grid-cols-[260px_1fr]">
+        <ProfilePanel />
+        <div>
+          <h1 className="mb-2 text-lg font-md">
+            Blog
+          </h1>
+          <BlogPosts />
+        </div>
+      </div>
     </section>
   )
 }
