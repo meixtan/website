@@ -23,9 +23,7 @@ export default function Seo({slug, title, summary, sitePath, schemaType, publish
             datePublished: publishedAt,
             dateModified: publishedAt,
             description: summary,
-            image: image
-              ? `${baseUrl}${image}`
-              : `/og?title=${encodeURIComponent(title)}`,
+            image: image ? `${baseUrl}${image}` : undefined,
             url: `${baseUrl}/${sitePath}/${slug}`,
             author: {
               '@type': 'Mei Tan',

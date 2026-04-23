@@ -26,9 +26,7 @@ export async function generateMetadata({ params }:{params: Promise<{ slug: strin
     summary: description,
     image,
   } = post.metadata
-  let ogImage = image
-    ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`
+  let images = image ? [{ url: image }] : undefined
 
   return {
     title,
@@ -39,17 +37,13 @@ export async function generateMetadata({ params }:{params: Promise<{ slug: strin
       type: 'article',
       publishedTime,
       url: `${baseUrl}/blog/${post.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
+      images,
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [ogImage],
+      images: image ? [image] : undefined,
     },
   }
 }
