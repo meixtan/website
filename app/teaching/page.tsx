@@ -2,8 +2,8 @@ import ProfilePanel from 'app/components/aside'
 import { TeachingPosts } from 'app/components/teachposts'
 
 export const metadata = {
-  title: 'Blog',
-  description: 'Read my blog.',
+  title: 'Teaching',
+  description: 'Teaching resources and workshops.',
 }
 
 export default function Page() {

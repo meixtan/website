@@ -2,8 +2,8 @@ import ProfilePanel from 'app/components/aside'
 import { PublicationPosts } from 'app/components/pubposts'
 
 export const metadata = {
-  title: 'Blog',
-  description: 'Read my blog.',
+  title: 'Publications',
+  description: 'Selected publications.',
 }
 
 export default function Page() {

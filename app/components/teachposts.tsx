@@ -1,8 +1,9 @@
 import { getTeachPosts } from 'app/utils'
+import type { TeachingSubject } from 'app/utils'
 import Link from 'next/link'
 
 type TeachingPostsProps = {
-    subject: string
+  subject: TeachingSubject
 }
 
 export function TeachingPosts({ subject }: TeachingPostsProps) {

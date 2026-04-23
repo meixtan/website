@@ -24,10 +24,12 @@ type BlogMetadata = {
   image?: string
 }
 
+export type TeachingSubject = "AI Lit" | "ETLT" | "CSP"
+
 type TeachMetadata = {
   title: string
   publishedAt: string
-  subject: "AI Lit" | "ETLT" | "CSP"
+  subject: TeachingSubject
   summary: string
   image?: string
 }
