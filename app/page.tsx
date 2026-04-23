@@ -1,5 +1,5 @@
 import ProfilePanel from './components/aside'
-import { PublicationPosts } from './components/pubposts'
+import { News } from './components/news'
 
 export default function Page() {
   return (
@@ -53,9 +53,8 @@ export default function Page() {
             </a>. 
           </p>
 
-          <div className="my-8">
-            <PublicationPosts />
-          </div>
+          <News />
+
         </div>
       </div>
     </section>

@@ -78,6 +78,16 @@ export function getBlogPosts() {
   return getPosts<BlogMetadata>('blog')
 }
 
+export function getNewsContent() {
+  let filePath = path.join(process.cwd(), 'app', 'news.md')
+
+  if (!fs.existsSync(filePath)) {
+    return ''
+  }
+
+  return fs.readFileSync(filePath, 'utf-8')
+}
+
 export function formatDate(date: string, includeRelative = false) {
   let currentDate = new Date()
   if (!date.includes('T')) {

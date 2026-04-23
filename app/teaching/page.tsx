@@ -22,7 +22,15 @@ export default function Page() {
             AI Literacy Workshops
           </p>
           <p className="mb-4 text-sm text-neutral-600 dark:text-neutral-400">
-            I work with teachers a lot in my research, and naturally, we end up talking about AI. At teacher summits and conferences, I've had the chance to lead AI literacy workshops.
+            I work with teachers a lot in my research, and naturally, we end up talking about AI. I also work at Stanford's{' '}
+            <a
+              href="https://ai-tinkery.stanford.edu/"
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-gray-300 underline-offset-4 hover:decoration-gray-600"
+            >
+              AI Tinkery
+            </a>. I've had the chance to pretty regularly lead AI literacy workshops.
             I love explaining this LLM moment we're living in. Honestly, I find myself doing this even while sitting at Starbucks.
           </p>
           <TeachingPosts
