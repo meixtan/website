@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Knowledge Elicitation Map</title>
+<meta name="description" content="A living map of knowledge elicitation methods from psychology, anthropology, sociology, decision science, HCI, and knowledge engineering, organized by what each method asks participants to do.">
+<link rel="canonical" href="https://meixtan.com/elicitation/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://meixtan.com/elicitation/">
+<meta property="og:title" content="Knowledge Elicitation Map">
+<meta property="og:description" content="A living map of knowledge elicitation methods from psychology, anthropology, sociology, decision science, HCI, and knowledge engineering, organized by what each method asks participants to do.">
+<meta property="og:image" content="https://meixtan.com/elicitation/images/studies/cottam.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
+<style>
+/* Layout: matches meixtan.com — one narrow column, Geist, black on white, gray secondary text; the colored tradition dots are the only color. */
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --fg: #171717;
+  --muted: #4b5563;
+  --faint: #9ca3af;
+  --line: #e5e7eb;
+  --underline: #d1d5db;
+  --tile: #fafafa;
+  --tldr-bg: #efe7fd;
+  --tldr-border: #d8c4fa;
+  --t0: #2563eb;  /* Knowledge engineering */
+  --t1: #7c3aed;  /* Psychology */
+  --t2: #d97706;  /* Anthropology */
+  --t3: #059669;  /* Sociology */
+  --t4: #db2777;  /* HCI & design */
+  --t5: #6b7280;  /* Decision science */
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #000000; --surface: #0a0a0a; --fg: #f5f5f5; --muted: #a3a3a3; --faint: #737373; --line: #262626; --underline: #525252; --tile: #0f0f0f; --tldr-bg: #1c1827; --tldr-border: #3a3150;
+    --t0: #60a5fa; --t1: #a78bfa; --t2: #fbbf24; --t3: #34d399; --t4: #f472b6; --t5: #9ca3af;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #000000; --surface: #0a0a0a; --fg: #f5f5f5; --muted: #a3a3a3; --faint: #737373; --line: #262626; --underline: #525252; --tile: #0f0f0f; --tldr-bg: #1c1827; --tldr-border: #3a3150;
+  --t0: #60a5fa; --t1: #a78bfa; --t2: #fbbf24; --t3: #34d399; --t4: #f472b6; --t5: #9ca3af;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-sans); font-size: 1rem; line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+::selection { color: #fefefe; background: #47a3f3; }
+.wrap { max-width: 56rem; margin: 0 auto; padding-block: 56px 0; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--underline); text-underline-offset: 4px; }
+a:hover { text-decoration-color: var(--muted); }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; border-radius: 3px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; letter-spacing: -0.025em; }
+.small { font-size: 0.875rem; color: var(--muted); }
+
+/* Header */
+header.top { display: grid; gap: 14px; padding-bottom: 8px; }
+header.top h1 { font-size: 1.5rem; font-weight: 600; }
+header.top .lead { margin: 0; max-width: 42rem; }
+header.top nav { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 0.875rem; }
+header.top nav a { color: var(--muted); text-decoration: none; }
+header.top nav a:hover { color: var(--fg); }
+
+section { padding-block: 28px; }
+section > h2, .prose h2, .explore-head h2 { font-size: 1.125rem; font-weight: 500; margin-bottom: 8px; }
+.prose { max-width: none; }
+#intro { padding-top: 12px; padding-bottom: 4px; }
+#intro p:last-child { margin-bottom: 0; }
+.prose p { margin: 0 0 1rem; }
+
+/* Explore */
+.explore-head { display: grid; gap: 10px; }
+.cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.cat-btn {
+  font: inherit; text-align: left; cursor: pointer; color: var(--fg);
+  background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px;
+  display: grid; gap: 4px; align-content: start; transition: border-color 0.15s, background 0.15s;
+}
+.cat-btn .t { font-weight: 500; letter-spacing: -0.01em; }
+.cat-btn .d { font-size: 0.875rem; color: var(--muted); line-height: 1.45; }
+.cat-btn:hover { border-color: var(--faint); }
+.cat-btn[aria-pressed="true"] { border-color: var(--fg); background: var(--fg); color: var(--bg); }
+.cat-btn[aria-pressed="true"] .d { color: var(--bg); opacity: 0.75; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; justify-content: space-between; padding-block: 16px 4px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+.chip {
+  font: inherit; font-size: 0.8125rem; color: var(--muted); background: none; border: 0; padding: 2px 0; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.chip .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.chip .n { color: var(--faint); }
+.chip:hover { color: var(--fg); }
+.chip[aria-pressed="true"] { color: var(--fg); font-weight: 500; }
+.legend.filtering .chip[aria-pressed="false"] { opacity: 0.45; }
+.search { display: flex; align-items: center; gap: 10px; }
+.search input {
+  font: inherit; font-size: 0.875rem; width: 14rem; max-width: 60vw;
+  padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg);
+}
+.search input::placeholder { color: var(--faint); }
+.match-count { font-size: 0.8125rem; color: var(--muted); min-width: 7ch; }
+
+.tree-scroll { overflow-x: auto; overflow-y: hidden; padding-block: 8px; -webkit-overflow-scrolling: touch; }
+.tree-scroll svg { display: block; }
+.swipe-hint { display: none; font-size: 0.8125rem; color: var(--faint); }
+@media (max-width: 760px) { .swipe-hint { display: block; } }
+
+/* Tree marks */
+.link { fill: none; stroke: var(--line); stroke-width: 1.25; transition: stroke 0.15s, opacity 0.2s; }
+.link.hl { stroke: var(--faint); stroke-width: 1.5; }
+.node text { paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; font-family: var(--font-sans); }
+.node .lab-struct { font-size: 13px; font-weight: 500; fill: var(--muted); }
+.node.root .lab-struct { fill: var(--fg); font-weight: 600; font-size: 14px; }
+.node .lab-method { font-size: 14px; fill: var(--fg); }
+.node.group .lab-method { fill: var(--muted); }
+.node .ring { fill: none; stroke: var(--bg); stroke-width: 1.5; }
+.node .hollow { fill: var(--bg); stroke: var(--faint); stroke-width: 1.25; }
+.node .solid { fill: var(--fg); }
+.node.clickable { cursor: pointer; }
+.node.clickable:hover .lab-method, .node.clickable:focus-visible .lab-method { text-decoration: underline; text-underline-offset: 4px; }
+.node.clickable:focus { outline: none; }
+.node.clickable:focus-visible .hit { stroke: var(--fg); stroke-width: 1; stroke-dasharray: 3 3; }
+.node .hit { fill: transparent; }
+.node, .link { transition: opacity 0.2s; }
+.dim { opacity: 0.18; }
+
+/* Index */
+.index-cat { display: grid; gap: 10px; padding-block: 10px 18px; }
+.index-cat > h3 { font-size: 1rem; font-weight: 500; }
+.index-cat > p { margin: -6px 0 4px; font-size: 0.875rem; color: var(--muted); }
+.index-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px 28px; }
+.branch-block { min-width: 0; }
+.branch-block h4 { margin: 0; font-size: 0.875rem; font-weight: 500; color: var(--fg); }
+.branch-block p { margin: 2px 0 8px; font-size: 0.8125rem; color: var(--muted); line-height: 1.4; }
+.branch-block ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 1px; }
+.branch-block ul ul { padding-left: 17px; }
+.mbtn {
+  font: inherit; font-size: 0.9375rem; color: var(--fg); background: none; border: 0; padding: 2px 0;
+  cursor: pointer; display: inline-flex; gap: 8px; align-items: center; text-align: left; text-decoration: none;
+}
+.mbtn:hover span:last-child { text-decoration: underline; text-decoration-color: var(--underline); text-underline-offset: 4px; }
+.mbtn.parent { color: var(--muted); }
+.branch-block ul.subtypes { padding-left: 17px; gap: 0; }
+.mbtn.subtype { color: var(--muted); font-size: 0.875rem; padding: 1px 0; }
+.mbtn.subtype:hover { color: var(--fg); text-decoration: underline; text-decoration-color: var(--underline); text-underline-offset: 4px; }
+.mbtn.nocontent { cursor: default; color: var(--muted); }
+.mbtn.nocontent:hover span:last-child { text-decoration: none; }
+li.dim { opacity: 0.3; }
+.pie { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+
+.refs-h { font-size: 0.875rem; font-weight: 500; margin: 20px 0 8px; }
+.refs { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 0.875rem; line-height: 1.5; color: var(--muted); }
+.refs li { padding-left: 1.5em; text-indent: -1.5em; overflow-wrap: anywhere; }
+footer { padding-block: 24px 64px; color: var(--faint); font-size: 0.8125rem; }
+
+/* Drawer */
+.scrim { position: fixed; inset: 0; background: color-mix(in srgb, var(--fg) 12%, transparent); opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 20; }
+.scrim.open { opacity: 1; pointer-events: auto; }
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(600px, 100vw); z-index: 21;
+  background: var(--surface); border-left: 1px solid var(--line); overflow-y: auto; overscroll-behavior: contain;
+  transform: translateX(102%); transition: transform 0.25s cubic-bezier(.4,0,.2,1);
+  padding: calc(24px + env(safe-area-inset-top, 0px)) max(28px, env(safe-area-inset-right, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)) 32px;
+}
+.drawer.open { transform: none; }
+@media (max-width: 520px) { .drawer { padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); } }
+.d-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; }
+.d-crumb { font-size: 0.8125rem; color: var(--muted); }
+.icon-btn { font: inherit; font-size: 0.875rem; border: 0; background: none; color: var(--muted); padding: 2px 0; cursor: pointer; }
+.icon-btn:hover { color: var(--fg); }
+.drawer h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 10px; }
+.drawer h2:focus { outline: none; }
+.d-trads { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-bottom: 16px; }
+.d-trads .chip { cursor: default; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-link { text-decoration: none; }
+.tag-link:hover { color: var(--fg); border-color: var(--faint); }
+.tag-btn { font-family: inherit; background: var(--bg); cursor: pointer; padding: 2px 10px; }
+.tag-btn:hover { color: var(--fg); border-color: var(--faint); }
+.tag-btn[aria-pressed="true"] { color: var(--bg); background: var(--fg); border-color: var(--fg); }
+.tag { font-size: 0.75rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; line-height: 1.5; align-self: center; }
+.d-trads .chip:hover { color: var(--muted); }
+.d-meta { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 16px; margin: 0 0 20px; font-size: 0.875rem; }
+.d-meta dt { color: var(--muted); }
+.d-meta dd { margin: 0; }
+.d-sec { margin-bottom: 20px; max-width: 65ch; }
+.d-sec h3 { font-size: 0.9375rem; font-weight: 500; margin-bottom: 4px; }
+.d-sec p { margin: 0 0 0.75em; color: var(--fg); }
+.d-summary { margin: 0 0 14px; padding: 14px 16px; background: var(--tldr-bg); border: 1px solid var(--tldr-border); border-radius: 10px; font-size: 1.0625rem; line-height: 1.5; color: var(--fg); }
+.d-refs summary { font-size: 0.9375rem; font-weight: 500; cursor: pointer; list-style: none; display: flex; gap: 8px; align-items: baseline; }
+.d-refs summary::-webkit-details-marker { display: none; }
+.d-refs summary::before { content: "›"; display: inline-block; width: 0.8em; color: var(--muted); transition: transform 0.15s; }
+.d-refs[open] summary::before { transform: rotate(90deg); }
+.d-refs summary span { color: var(--faint); font-weight: 400; font-size: 0.875rem; }
+.d-refs summary:hover { color: var(--muted); }
+.d-refs .refs { margin-top: 8px; }
+.d-lead { display: flex; gap: 14px; align-items: stretch; margin: 0 0 14px; }
+.d-lead .d-summary { margin: 0; flex: 1; min-width: 0; display: flex; align-items: center; }
+.d-example { display: flow-root; }
+.d-expara { display: flow-root; margin-bottom: 0.75em; }
+.d-expara p { margin-bottom: 0; }
+.d-fig { float: right; clear: right; width: 200px; height: auto; margin: 4px 0 10px 18px; border-radius: 10px; display: block; }
+@media (max-width: 520px) { .d-fig { width: 132px; margin-left: 14px; } }
+.d-variants { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
+.d-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); }
+.d-nav button { font: inherit; text-align: left; background: none; border: 0; color: var(--fg); cursor: pointer; padding: 2px 0; max-width: 48%; display: grid; gap: 0; }
+.d-nav button:last-child { text-align: right; }
+.d-nav button .small { font-size: 0.8125rem; }
+.d-nav button:hover span:last-child { text-decoration: underline; text-decoration-color: var(--underline); text-underline-offset: 4px; }
+.d-nav button[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer, .scrim, .link, .node { transition: none; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1 id="page-title">Knowledge Elicitation Map</h1>
+  </header>
+
+  <section id="intro" class="prose">
+    <div id="intro-text"></div>
+  </section>
+
+  <section id="explore" aria-labelledby="prompt">
+    <div class="explore-head">
+      <h2 id="prompt">What is the participant doing?</h2>
+      <div class="cats" id="cats" role="group" aria-label="Choose a branch"></div>
+    </div>
+    <div class="controls">
+      <div class="legend" id="legend" role="group" aria-label="Highlight a tradition"></div>
+      <div class="tags" id="tags" role="group" aria-label="Highlight a tag"></div>
+    </div>
+    <div class="swipe-hint">Swipe sideways to see the whole tree →</div>
+    <div class="tree-scroll" id="tree-scroll"><svg id="tree" role="img" aria-label="Tree of knowledge elicitation methods"></svg></div>
+  </section>
+
+  <div id="prose-after"></div>
+
+  <section id="every-method" aria-labelledby="every-h">
+    <h2 id="every-h">Every method</h2>
+    <div id="index"></div>
+  </section>
+
+  <section id="references">
+    <h2 id="ov-refs-h">References</h2>
+    <ul class="refs" id="ov-refs"></ul>
+  </section>
+
+  <div style="height:64px"></div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title" aria-hidden="true">
+  <div class="d-top">
+    <div class="d-crumb" id="d-crumb"></div>
+    <button class="icon-btn" id="d-close" type="button">close</button>
+  </div>
+  <h2 id="d-title" tabindex="-1"></h2>
+  <div class="d-lead" id="d-lead">
+    <p class="d-summary" id="d-summary"></p>
+  </div>
+  <div class="d-trads" id="d-trads"></div>
+  <dl class="d-meta" id="d-meta"></dl>
+  <div id="d-body"></div>
+</aside>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+const DATA = /*__DATA__*/null;
+
+/* ---------- traditions ---------- */
+const SHORT = {
+  "Knowledge Engineering / AI": "Knowledge engineering",
+  "Psychology / Cognitive Science": "Psychology",
+  "Anthropology / Ethnography": "Anthropology",
+  "Sociology / Qualitative Research": "Sociology",
+  "Human-Computer Interaction / Design Research": "HCI & design",
+  "Decision Science / Operations Research": "Decision science",
+};
+const ORDER = Object.keys(SHORT);
+const TRADS = ORDER.filter(t => DATA.traditions.includes(t)).concat(DATA.traditions.filter(t => !ORDER.includes(t)));
+const tColor = t => `var(--t${Math.max(0, ORDER.indexOf(t)) % 6})`;
+const tShort = t => SHORT[t] || t;
+
+/* ---------- flatten ---------- */
+const strip = s => s.replace(/<[^>]+>/g, "");
+const methods = [];          // every node with an id, in document order
+const byId = new Map();
+function index(node, cat, parent) {
+  if (node.id) {
+    node._cat = cat; node._parent = parent;
+    node._text = (node.name + " " + node.fields.map(f => f.label + " " + f.paras.join(" ")).join(" ") + " " +
+      (node.traditions || []).join(" ")).toLowerCase();
+    node._text = strip(node._text);
+    node._tags = node.fields.filter(f => /^Tags?$/.test(f.label))
+      .flatMap(f => strip(f.paras.join(" ")).split(";").map(t => t.trim()).filter(Boolean));
+    methods.push(node); byId.set(node.id, node);
+  }
+  (node.children || []).forEach(c => index(c, cat, node));
+}
+DATA.categories.forEach(c => index(c, c, null));
+const readable = methods.filter(m => m.hasContent);
+const countIn = n => (n.id && n.hasContent ? 1 : 0) + (n.children || []).reduce((a, c) => a + countIn(c), 0);
+
+/* ---------- state ---------- */
+const state = { cat: DATA.categories[0].name, trad: null, tag: null, q: "" };
+function matches(m) {
+  if (!m.hasContent) return false;
+  if (state.trad && !(m.traditions || []).includes(state.trad)) return false;
+  if (state.tag && !m._tags.includes(state.tag)) return false;
+  if (state.q && !m._text.includes(state.q)) return false;
+  return true;
+}
+const filtering = () => !!(state.trad || state.tag || state.q);
+
+/* ---------- pie dot as CSS (for index + chips) ---------- */
+function pieCSS(trads) {
+  if (!trads || !trads.length) return "background: transparent; border: 1.5px solid var(--muted)";
+  if (trads.length === 1) return `background: ${tColor(trads[0])}`;
+  const step = 360 / trads.length;
+  return `background: conic-gradient(${trads.map((t, i) => `${tColor(t)} ${i * step}deg ${(i + 1) * step}deg`).join(",")})`;
+}
+
+/* ---------- header bits ---------- */
+
+const catsEl = document.getElementById("cats");
+const catOptions = DATA.categories.map(c => ({ name: c.name, desc: c.desc }));
+catOptions.forEach(o => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "cat-btn"; b.dataset.cat = o.name;
+  b.innerHTML = `<span class="t">${o.name}</span><span class="d">${o.desc}</span>`;
+  b.addEventListener("click", () => { state.cat = o.name; syncCats(); renderTree(true); });
+  catsEl.appendChild(b);
+});
+function syncCats() {
+  catsEl.querySelectorAll(".cat-btn").forEach(b => b.setAttribute("aria-pressed", b.dataset.cat === state.cat));
+}
+
+const legend = document.getElementById("legend");
+TRADS.forEach(t => {
+  const n = readable.filter(m => (m.traditions || []).includes(t)).length;
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "chip"; b.dataset.trad = t; b.title = t;
+  b.setAttribute("aria-pressed", "false");
+  b.innerHTML = `<span class="dot" style="background:${tColor(t)}"></span>${tShort(t)}`;
+  b.addEventListener("click", () => { state.trad = state.trad === t ? null : t; applyFilter(); });
+  legend.appendChild(b);
+});
+
+
+/* ---------- tree ---------- */
+const tagsEl = document.getElementById("tags");
+[...new Set(readable.flatMap(m => m._tags))].forEach(t => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "tag tag-btn"; b.dataset.tag = t; b.textContent = t;
+  b.setAttribute("aria-pressed", "false");
+  b.addEventListener("click", () => { state.tag = state.tag === t ? null : t; applyFilter(); });
+  tagsEl.appendChild(b);
+});
+
+const svg = d3.select("#tree");
+const measureCtx = document.createElement("canvas").getContext("2d");
+function textW(s, kind) {
+  measureCtx.font = kind === "method" ? "14px Geist, system-ui, sans-serif" : "600 14px Geist, system-ui, sans-serif";
+  return measureCtx.measureText(s).width;
+}
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let nodeSel, linkSel;
+
+function renderTree(animate) {
+  const both = state.cat === "Both";
+  const rootData = both ? { name: "Knowledge elicitation", level: 1, children: DATA.categories } :
+    DATA.categories.find(c => c.name === state.cat);
+  const root = d3.hierarchy(rootData, d => d.children);
+  const ROW = 30;
+  d3.tree().nodeSize([ROW, 1]).separation((a, b) => (a.parent === b.parent ? 1 : 1.35))(root);
+  const narrow = window.innerWidth < 640;
+  const COLX = both ? [0, 130, 280, 470, 700] : (narrow ? [0, 140, 320, 550] : [0, 160, 350, 580]);
+  root.each(d => { d.y = COLX[d.depth]; });
+
+  const kind = d => d.data.id ? "method" : "struct";
+  const labelLeft = d => !!d.children;
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  root.each(d => {
+    const w = textW(d.data.name, kind(d));
+    minX = Math.min(minX, d.x); maxX = Math.max(maxX, d.x);
+    minY = Math.min(minY, labelLeft(d) ? d.y - 14 - w : d.y);
+    maxY = Math.max(maxY, labelLeft(d) ? d.y : d.y + 14 + w);
+  });
+  const pad = 14;
+  const W = Math.ceil(maxY - minY + pad * 2), H = Math.ceil(maxX - minX + pad * 2 + 10);
+  svg.attr("width", W).attr("height", H).attr("viewBox", [minY - pad, minX - pad - 5, W, H].join(" "));
+  svg.selectAll("*").remove();
+
+  const dur = animate && !reduceMotion ? 550 : 0;
+  const ease = d3.easeCubicOut;
+  const linkPath = d3.linkHorizontal().x(p => p.y).y(p => p.x);
+  const gLinks = svg.append("g"), gNodes = svg.append("g");
+
+  linkSel = gLinks.selectAll("path").data(root.links()).join("path")
+    .attr("class", "link")
+    .attr("d", l => linkPath({ source: l.source, target: l.source }))
+    .call(s => dur ? s.transition().duration(dur).ease(ease).delay(l => l.source.depth * 60).attr("d", linkPath) : s.attr("d", linkPath));
+
+  nodeSel = gNodes.selectAll("g").data(root.descendants()).join("g")
+    .attr("class", d => {
+      const c = ["node"];
+      if (d.depth === 0) c.push("root");
+      if (d.data.id && d.children) c.push("group");
+      if (d.data.id) c.push(d.data.hasContent ? "method clickable" : "");
+      return c.join(" ");
+    })
+    .attr("transform", d => `translate(${(d.parent || d).y},${(d.parent || d).x})`)
+    .style("opacity", dur ? 0 : null);
+  if (!dur) nodeSel.attr("transform", d => `translate(${d.y},${d.x})`);
+  else nodeSel.transition().duration(dur).ease(ease).delay(d => Math.max(0, d.depth - 1) * 60)
+    .attr("transform", d => `translate(${d.y},${d.x})`).style("opacity", 1)
+    .on("end", function () { d3.select(this).style("opacity", null); });
+
+  // marks
+  const pie = d3.pie().value(1).sort(null), arc = d3.arc().innerRadius(0).outerRadius(6.5);
+  nodeSel.each(function (d) {
+    const g = d3.select(this);
+    if (d.data.id && d.data.hasContent && d.data.traditions && d.data.traditions.length) {
+      const t = d.data.traditions;
+      if (t.length === 1) g.append("circle").attr("r", 6.5).style("fill", tColor(t[0]));
+      else g.selectAll("path.w").data(pie(t)).join("path").attr("d", arc).style("fill", a => tColor(a.data));
+      g.append("circle").attr("class", "ring").attr("r", 7.25);
+    } else if (d.depth === 0) {
+      g.append("circle").attr("class", "solid").attr("r", 6);
+    } else {
+      g.append("circle").attr("class", "hollow").attr("r", 4.5);
+    }
+    const left = labelLeft(d);
+    const label = g.append("text")
+      .attr("class", kind(d) === "method" ? "lab-method" : "lab-struct")
+      .attr("x", left ? -13 : 13).attr("dy", "0.34em")
+      .attr("text-anchor", left ? "end" : "start")
+      .text(d.data.name);
+    if (d.data.id && d.data.hasContent) {
+      const w = textW(d.data.name, "method");
+      g.insert("rect", ":first-child").attr("class", "hit")
+        .attr("x", left ? -18 - w : -10).attr("y", -12).attr("width", w + 30).attr("height", 24).attr("rx", 4);
+      g.attr("tabindex", 0).attr("role", "button").attr("aria-label", `${d.data.name}: open details`)
+        .on("click", () => openMethod(d.data.id))
+        .on("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openMethod(d.data.id); } });
+    }
+    g.on("mouseenter focus", () => highlight(d, true)).on("mouseleave blur", () => highlight(d, false));
+  });
+  applyFilter();
+}
+
+function highlight(d, on) {
+  const anc = new Set(d.ancestors());
+  linkSel.classed("hl", l => on && anc.has(l.target));
+}
+
+function applyFilter() {
+  const active = filtering();
+  legend.classList.toggle("filtering", !!state.trad);
+  legend.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", b.dataset.trad === state.trad));
+  tagsEl.querySelectorAll(".tag-btn").forEach(b => b.setAttribute("aria-pressed", b.dataset.tag === state.tag));
+  const live = d => {
+    if (!active) return true;
+    if (d.data.id && matches(d.data)) return true;
+    return (d.children || []).some(live);
+  };
+  if (nodeSel) {
+    nodeSel.classed("dim", d => active && !live(d));
+    linkSel.classed("dim", l => active && !live(l.target));
+  }
+  document.querySelectorAll("#index li[data-id]").forEach(li => {
+    const m = byId.get(li.dataset.id);
+    const hit = !active || matches(m) || (m.children || []).some(matches);
+    li.classList.toggle("dim", !hit);
+  });
+}
+
+/* ---------- index ---------- */
+function methodItem(m) {
+  const li = document.createElement("li");
+  li.dataset.id = m.id;
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "mbtn" + (m.hasContent ? "" : " nocontent") + (m.children ? " parent" : "");
+  b.innerHTML = `<span class="pie" style="${pieCSS(m.hasContent ? m.traditions : null)}"></span><span>${m.name}</span>`;
+  if (m.hasContent) b.addEventListener("click", () => openMethod(m.id)); else b.tabIndex = -1;
+  li.appendChild(b);
+  if (m.children) {
+    const ul = document.createElement("ul");
+    m.children.forEach(c => ul.appendChild(methodItem(c)));
+    li.appendChild(ul);
+  }
+  if (m.subtypes) {
+    const ul = document.createElement("ul");
+    ul.className = "subtypes";
+    m.subtypes.forEach(name => {
+      const sli = document.createElement("li");
+      const sb = document.createElement("button");
+      sb.type = "button"; sb.className = "mbtn subtype"; sb.textContent = name;
+      sb.setAttribute("aria-label", `${name} (part of ${m.name})`);
+      sb.addEventListener("click", () => openMethod(m.id));
+      sli.appendChild(sb); ul.appendChild(sli);
+    });
+    li.appendChild(ul);
+  }
+  return li;
+}
+const idxEl = document.getElementById("index");
+DATA.categories.forEach(cat => {
+  const wrap = document.createElement("div"); wrap.className = "index-cat";
+  wrap.innerHTML = `<h3>${cat.name}</h3><p>${cat.desc}</p>`;
+  const grid = document.createElement("div"); grid.className = "index-grid";
+  (cat.children || []).forEach(br => {
+    const blk = document.createElement("div"); blk.className = "branch-block";
+    blk.innerHTML = `<h4>${br.name}</h4>${br.desc ? `<p>${br.desc}</p>` : ""}`;
+    const ul = document.createElement("ul");
+    (br.children || []).forEach(m => ul.appendChild(methodItem(m)));
+    blk.appendChild(ul); grid.appendChild(blk);
+  });
+  wrap.appendChild(grid); idxEl.appendChild(wrap);
+});
+
+/* ---------- prose ---------- */
+document.getElementById("page-title").textContent = DATA.title;
+document.getElementById("intro-text").innerHTML = DATA.intro.map(p => `<p>${p}</p>`).join("");
+document.getElementById("prose-after").innerHTML = DATA.sections.map(sec =>
+  `<section class="prose" id="${sec.id}"><h2>${sec.name}</h2>${sec.paras.map(p => `<p>${p}</p>`).join("")}</section>`).join("");
+const ovRefs = DATA.refs || [];
+document.getElementById("ov-refs").innerHTML = ovRefs.map(r => `<li>${r}</li>`).join("");
+document.getElementById("ov-refs-h").hidden = !ovRefs.length;
+
+/* ---------- drawer ---------- */
+const drawer = document.getElementById("drawer"), scrim = document.getElementById("scrim");
+const META = ["Summary", "Also called", "Tag", "Tags", "Broader approach"];
+const ORDER_FIELDS = l => /^Method/.test(l) ? 0 : /^Examples?$/.test(l) ? 1 : /^Origins/.test(l) ? 2 : 3;
+let lastFocus = null, currentId = null;
+
+// illustrations float beside the example paragraph they depict; a method without study images uses its own image
+function figImg(src, alt, cls = "d-fig") {
+  return `<img class="${cls}" src="${src}" alt="${alt.replace(/"/g, "&quot;")}" loading="lazy">`;
+}
+function exampleParas(f, m) {
+  const imgs = f.images || [];
+  return f.paras.map((p, pi) => {
+    let figs = imgs.filter(x => x.para === pi).map(x => figImg(x.src, `Illustration of ${x.caption}`)).join("");
+    // a full method illustration fills the first paragraph when no study image claims it
+    if (pi === 0 && !figs && m.image && (!imgs.length || m.image.startsWith("images/methods/"))) figs = figImg(m.image, `Illustration of ${m.name.toLowerCase()}`);
+    return figs ? `<div class="d-expara">${figs}<p>${p}</p></div>` : `<p>${p}</p>`;
+  }).join("");
+}
+
+function openMethod(id, fromHash) {
+  const m = byId.get(id);
+  if (!m || !m.hasContent) return;
+  if (!drawer.classList.contains("open")) lastFocus = document.activeElement;
+  currentId = id;
+  // sync tree to this method's category
+  if (state.cat !== "Both" && state.cat !== m._cat.name) { state.cat = m._cat.name; syncCats(); renderTree(false); }
+
+  const crumb = [...m.path.slice(), ];
+  document.getElementById("d-crumb").textContent = crumb.join(" / ");
+  document.getElementById("d-title").textContent = m.name;
+  document.getElementById("d-trads").innerHTML = (m.traditions || []).map(t =>
+    `<span class="chip" title="${t}"><span class="dot" style="background:${tColor(t)}"></span>${t}</span>`).join("");
+
+  const meta = m.fields.filter(f => META.includes(f.label));
+  const tags = meta.filter(f => /^Tags?$/.test(f.label))
+    .flatMap(f => strip(f.paras.join(" ")).split(";").map(t => t.trim()).filter(Boolean));
+  document.getElementById("d-trads").insertAdjacentHTML("beforeend", tags.map(t => `<span class="tag">${t}</span>`).join(""));
+  // the broader approach (e.g. Participatory design) shows as a pill that links to its page
+  const broaderField = meta.find(f => f.label === "Broader approach");
+  const broaderName = broaderField ? strip(broaderField.paras.join(" ")).trim()
+    : (m._parent && m._parent.hasContent ? m._parent.name : "");
+  const broader = broaderName && methods.find(x => x.name === broaderName && x.hasContent && x.id !== m.id);
+  if (broaderName) document.getElementById("d-trads").insertAdjacentHTML("beforeend",
+    broader ? `<a class="tag tag-link" href="#${broader.id}">${broader.name}</a>` : `<span class="tag">${broaderName}</span>`);
+  const metaHTML = meta.filter(f => !/^(Tags?|Summary|Broader approach)$/.test(f.label))
+    .map(f => `<dt>${f.label}</dt><dd>${f.paras.join(" ")}</dd>`).join("");
+  const metaEl = document.getElementById("d-meta");
+  metaEl.innerHTML = metaHTML; metaEl.hidden = !metaHTML;
+
+  const summary = m.fields.find(f => f.label === "Summary");
+  const sumEl = document.getElementById("d-summary");
+  sumEl.innerHTML = summary ? summary.paras.join(" ") : "";
+  // soft gradient across the method's tradition colors (a flat tint when there is only one)
+  const tcs = (m.traditions || []).map(tColor);
+  const tint = c => `color-mix(in srgb, ${c} 13%, var(--surface))`;
+  sumEl.style.background = !tcs.length ? "" : tcs.length === 1 ? tint(tcs[0])
+    : `linear-gradient(100deg, ${tcs.map(tint).join(", ")})`;
+  sumEl.style.borderColor = tcs.length ? `color-mix(in srgb, var(--fg) 9%, transparent)` : "";
+
+  const hasEx = m.fields.some(f => /^Examples?$/.test(f.label));
+  let body = m.fields.filter(f => !META.includes(f.label))
+    .map((f, i) => ({ f, i })).sort((a, b) => ORDER_FIELDS(a.f.label) - ORDER_FIELDS(b.f.label) || a.i - b.i)
+    .map(({ f }) => {
+      const isEx = /^Examples?$/.test(f.label);
+      // no example section: the method's illustration floats beside the Method text instead
+      const withFig = isEx || (!hasEx && /^Method/.test(f.label) && m.image);
+      return `<div class="d-sec${withFig ? " d-example" : ""}"><h3>${f.label}</h3>${withFig ? exampleParas(f, m) : f.paras.map(p => `<p>${p}</p>`).join("")}</div>`;
+    }).join("");
+  if (m.children && m.children.length) {
+    body += `<div class="d-sec"><h3>Variants</h3><ul class="d-variants">${m.children.map(c =>
+      `<li><a class="mbtn" href="#${c.id}"><span class="pie" style="${pieCSS(c.traditions)}"></span><span>${c.name}</span></a></li>`).join("")}</ul></div>`;
+  }
+  if (m.refs.length) {
+    body += `<details class="d-sec d-refs"><summary>${m.refs.length === 1 ? "Reference" : "References"} <span>${m.refs.length}</span></summary><ul class="refs">${m.refs.map(r => `<li>${r}</li>`).join("")}</ul></details>`;
+  }
+  document.getElementById("d-body").innerHTML = body;
+
+
+  drawer.classList.add("open"); scrim.classList.add("open");
+  drawer.setAttribute("aria-hidden", "false");
+  drawer.scrollTop = 0;
+  document.body.style.overflow = "hidden";
+  if (!fromHash && location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
+  requestAnimationFrame(() => document.getElementById("d-title").focus({ preventScroll: true }));
+}
+function closeDrawer() {
+  if (!drawer.classList.contains("open")) return;
+  drawer.classList.remove("open"); scrim.classList.remove("open");
+  drawer.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  currentId = null;
+  if (byId.has(location.hash.slice(1))) history.replaceState(null, "", "#explore");
+  if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+}
+document.getElementById("d-close").addEventListener("click", closeDrawer);
+scrim.addEventListener("click", closeDrawer);
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+
+function routeHash() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (byId.has(id)) openMethod(id, true); else if (currentId) closeDrawer();
+}
+window.addEventListener("hashchange", routeHash);
+
+/* ---------- boot ---------- */
+let lastW = window.innerWidth;
+window.addEventListener("resize", () => {
+  if ((lastW < 640) !== (window.innerWidth < 640)) renderTree(false);
+  lastW = window.innerWidth;
+});
+syncCats();
+renderTree(false);
+const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+fontsReady.then(() => renderTree(false));
+routeHash();
+</script>

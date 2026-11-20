@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Knowledge Elicitation Map</title>
+<meta name="description" content="A living map of knowledge elicitation methods from psychology, anthropology, sociology, decision science, HCI, and knowledge engineering, organized by what each method asks participants to do.">
+<link rel="canonical" href="https://meixtan.com/elicitation/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://meixtan.com/elicitation/">
+<meta property="og:title" content="Knowledge Elicitation Map">
+<meta property="og:description" content="A living map of knowledge elicitation methods from psychology, anthropology, sociology, decision science, HCI, and knowledge engineering, organized by what each method asks participants to do.">
+<meta property="og:image" content="https://meixtan.com/elicitation/images/studies/cottam.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
+<style>
+/* Layout: matches meixtan.com — one narrow column, Geist, black on white, gray secondary text; the colored tradition dots are the only color. */
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --fg: #171717;
+  --muted: #4b5563;
+  --faint: #9ca3af;
+  --line: #e5e7eb;
+  --underline: #d1d5db;
+  --tile: #fafafa;
+  --tldr-bg: #efe7fd;
+  --tldr-border: #d8c4fa;
+  --t0: #2563eb;  /* Knowledge engineering */
+  --t1: #7c3aed;  /* Psychology */
+  --t2: #d97706;  /* Anthropology */
+  --t3: #059669;  /* Sociology */
+  --t4: #db2777;  /* HCI & design */
+  --t5: #6b7280;  /* Decision science */
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #000000; --surface: #0a0a0a; --fg: #f5f5f5; --muted: #a3a3a3; --faint: #737373; --line: #262626; --underline: #525252; --tile: #0f0f0f; --tldr-bg: #1c1827; --tldr-border: #3a3150;
+    --t0: #60a5fa; --t1: #a78bfa; --t2: #fbbf24; --t3: #34d399; --t4: #f472b6; --t5: #9ca3af;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #000000; --surface: #0a0a0a; --fg: #f5f5f5; --muted: #a3a3a3; --faint: #737373; --line: #262626; --underline: #525252; --tile: #0f0f0f; --tldr-bg: #1c1827; --tldr-border: #3a3150;
+  --t0: #60a5fa; --t1: #a78bfa; --t2: #fbbf24; --t3: #34d399; --t4: #f472b6; --t5: #9ca3af;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-sans); font-size: 1rem; line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+::selection { color: #fefefe; background: #47a3f3; }
+.wrap { max-width: 56rem; margin: 0 auto; padding-block: 56px 0; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--underline); text-underline-offset: 4px; }
+a:hover { text-decoration-color: var(--muted); }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; border-radius: 3px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; letter-spacing: -0.025em; }
+.small { font-size: 0.875rem; color: var(--muted); }
+
+/* Header */
+header.top { display: grid; gap: 14px; padding-bottom: 8px; }
+header.top h1 { font-size: 1.5rem; font-weight: 600; }
+header.top .lead { margin: 0; max-width: 42rem; }
+header.top nav { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 0.875rem; }
+header.top nav a { color: var(--muted); text-decoration: none; }
+header.top nav a:hover { color: var(--fg); }
+
+section { padding-block: 28px; }
+section > h2, .prose h2, .explore-head h2 { font-size: 1.125rem; font-weight: 500; margin-bottom: 8px; }
+.prose { max-width: none; }
+#intro { padding-top: 12px; padding-bottom: 4px; }
+#intro p:last-child { margin-bottom: 0; }
+.prose p { margin: 0 0 1rem; }
+
+/* Explore */
+.explore-head { display: grid; gap: 10px; }
+.cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.cat-btn {
+  font: inherit; text-align: left; cursor: pointer; color: var(--fg);
+  background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px;
+  display: grid; gap: 4px; align-content: start; transition: border-color 0.15s, background 0.15s;
+}
+.cat-btn .t { font-weight: 500; letter-spacing: -0.01em; }
+.cat-btn .d { font-size: 0.875rem; color: var(--muted); line-height: 1.45; }
+.cat-btn:hover { border-color: var(--faint); }
+.cat-btn[aria-pressed="true"] { border-color: var(--fg); background: var(--fg); color: var(--bg); }
+.cat-btn[aria-pressed="true"] .d { color: var(--bg); opacity: 0.75; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; justify-content: space-between; padding-block: 16px 4px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+.chip {
+  font: inherit; font-size: 0.8125rem; color: var(--muted); background: none; border: 0; padding: 2px 0; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.chip .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.chip .n { color: var(--faint); }
+.chip:hover { color: var(--fg); }
+.chip[aria-pressed="true"] { color: var(--fg); font-weight: 500; }
+.legend.filtering .chip[aria-pressed="false"] { opacity: 0.45; }
+.search { display: flex; align-items: center; gap: 10px; }
+.search input {
+  font: inherit; font-size: 0.875rem; width: 14rem; max-width: 60vw;
+  padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg);
+}
+.search input::placeholder { color: var(--faint); }
+.match-count { font-size: 0.8125rem; color: var(--muted); min-width: 7ch; }
+
+.tree-scroll { overflow-x: auto; overflow-y: hidden; padding-block: 8px; -webkit-overflow-scrolling: touch; }
+.tree-scroll svg { display: block; }
+.swipe-hint { display: none; font-size: 0.8125rem; color: var(--faint); }
+@media (max-width: 760px) { .swipe-hint { display: block; } }
+
+/* Tree marks */
+.link { fill: none; stroke: var(--line); stroke-width: 1.25; transition: stroke 0.15s, opacity 0.2s; }
+.link.hl { stroke: var(--faint); stroke-width: 1.5; }
+.node text { paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; font-family: var(--font-sans); }
+.node .lab-struct { font-size: 13px; font-weight: 500; fill: var(--muted); }
+.node.root .lab-struct { fill: var(--fg); font-weight: 600; font-size: 14px; }
+.node .lab-method { font-size: 14px; fill: var(--fg); }
+.node.group .lab-method { fill: var(--muted); }
+.node .ring { fill: none; stroke: var(--bg); stroke-width: 1.5; }
+.node .hollow { fill: var(--bg); stroke: var(--faint); stroke-width: 1.25; }
+.node .solid { fill: var(--fg); }
+.node.clickable { cursor: pointer; }
+.node.clickable:hover .lab-method, .node.clickable:focus-visible .lab-method { text-decoration: underline; text-underline-offset: 4px; }
+.node.clickable:focus { outline: none; }
+.node.clickable:focus-visible .hit { stroke: var(--fg); stroke-width: 1; stroke-dasharray: 3 3; }
+.node .hit { fill: transparent; }
+.node, .link { transition: opacity 0.2s; }
+.dim { opacity: 0.18; }
+
+/* Index */
+.index-cat { display: grid; gap: 10px; padding-block: 10px 18px; }
+.index-cat > h3 { font-size: 1rem; font-weight: 500; }
+.index-cat > p { margin: -6px 0 4px; font-size: 0.875rem; color: var(--muted); }
+.index-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px 28px; }
+.branch-block { min-width: 0; }
+.branch-block h4 { margin: 0; font-size: 0.875rem; font-weight: 500; color: var(--fg); }
+.branch-block p { margin: 2px 0 8px; font-size: 0.8125rem; color: var(--muted); line-height: 1.4; }
+.branch-block ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 1px; }
+.branch-block ul ul { padding-left: 17px; }
+.mbtn {
+  font: inherit; font-size: 0.9375rem; color: var(--fg); background: none; border: 0; padding: 2px 0;
+  cursor: pointer; display: inline-flex; gap: 8px; align-items: center; text-align: left; text-decoration: none;
+}
+.mbtn:hover span:last-child { text-decoration: underline; text-decoration-color: var(--underline); text-underline-offset: 4px; }
+.mbtn.parent { color: var(--muted); }
+.branch-block ul.subtypes { padding-left: 17px; gap: 0; }
+.mbtn.subtype { color: var(--muted); font-size: 0.875rem; padding: 1px 0; }
+.mbtn.subtype:hover { color: var(--fg); text-decoration: underline; text-decoration-color: var(--underline); text-underline-offset: 4px; }
+.mbtn.nocontent { cursor: default; color: var(--muted); }
+.mbtn.nocontent:hover span:last-child { text-decoration: none; }
+li.dim { opacity: 0.3; }
+.pie { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+
+.refs-h { font-size: 0.875rem; font-weight: 500; margin: 20px 0 8px; }
+.refs { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 0.875rem; line-height: 1.5; color: var(--muted); }
+.refs li { padding-left: 1.5em; text-indent: -1.5em; overflow-wrap: anywhere; }
+footer { padding-block: 24px 64px; color: var(--faint); font-size: 0.8125rem; }
+
+/* Drawer */
+.scrim { position: fixed; inset: 0; background: color-mix(in srgb, var(--fg) 12%, transparent); opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 20; }
+.scrim.open { opacity: 1; pointer-events: auto; }
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(600px, 100vw); z-index: 21;
+  background: var(--surface); border-left: 1px solid var(--line); overflow-y: auto; overscroll-behavior: contain;
+  transform: translateX(102%); transition: transform 0.25s cubic-bezier(.4,0,.2,1);
+  padding: calc(24px + env(safe-area-inset-top, 0px)) max(28px, env(safe-area-inset-right, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)) 32px;
+}
+.drawer.open { transform: none; }
+@media (max-width: 520px) { .drawer { padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); } }
+.d-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; }
+.d-crumb { font-size: 0.8125rem; color: var(--muted); }
+.icon-btn { font: inherit; font-size: 0.875rem; border: 0; background: none; color: var(--muted); padding: 2px 0; cursor: pointer; }
+.icon-btn:hover { color: var(--fg); }
+.drawer h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 10px; }
+.drawer h2:focus { outline: none; }
+.d-trads { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-bottom: 16px; }
+.d-trads .chip { cursor: default; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-link { text-decoration: none; }
+.tag-link:hover { color: var(--fg); border-color: var(--faint); }
+.tag-btn { font-family: inherit; background: var(--bg); cursor: pointer; padding: 2px 10px; }
+.tag-btn:hover { color: var(--fg); border-color: var(--faint); }
+.tag-btn[aria-pressed="true"] { color: var(--bg); background: var(--fg); border-color: var(--fg); }
+.tag { font-size: 0.75rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; line-height: 1.5; align-self: center; }
+.d-trads .chip:hover { color: var(--muted); }
+.d-meta { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 16px; margin: 0 0 20px; font-size: 0.875rem; }
+.d-meta dt { color: var(--muted); }
+.d-meta dd { margin: 0; }
+.d-sec { margin-bottom: 20px; max-width: 65ch; }
+.d-sec h3 { font-size: 0.9375rem; font-weight: 500; margin-bottom: 4px; }
+.d-sec p { margin: 0 0 0.75em; color: var(--fg); }
+.d-summary { margin: 0 0 14px; padding: 14px 16px; background: var(--tldr-bg); border: 1px solid var(--tldr-border); border-radius: 10px; font-size: 1.0625rem; line-height: 1.5; color: var(--fg); }
+.d-refs summary { font-size: 0.9375rem; font-weight: 500; cursor: pointer; list-style: none; display: flex; gap: 8px; align-items: baseline; }
+.d-refs summary::-webkit-details-marker { display: none; }
+.d-refs summary::before { content: "›"; display: inline-block; width: 0.8em; color: var(--muted); transition: transform 0.15s; }
+.d-refs[open] summary::before { transform: rotate(90deg); }
+.d-refs summary span { color: var(--faint); font-weight: 400; font-size: 0.875rem; }
+.d-refs summary:hover { color: var(--muted); }
+.d-refs .refs { margin-top: 8px; }
+.d-lead { display: flex; gap: 14px; align-items: stretch; margin: 0 0 14px; }
+.d-lead .d-summary { margin: 0; flex: 1; min-width: 0; display: flex; align-items: center; }
+.d-example { display: flow-root; }
+.d-expara { display: flow-root; margin-bottom: 0.75em; }
+.d-expara p { margin-bottom: 0; }
+.d-fig { float: right; clear: right; width: 200px; height: auto; margin: 4px 0 10px 18px; border-radius: 10px; display: block; }
+@media (max-width: 520px) { .d-fig { width: 132px; margin-left: 14px; } }
+.d-variants { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
+.d-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); }
+.d-nav button { font: inherit; text-align: left; background: none; border: 0; color: var(--fg); cursor: pointer; padding: 2px 0; max-width: 48%; display: grid; gap: 0; }
+.d-nav button:last-child { text-align: right; }
+.d-nav button .small { font-size: 0.8125rem; }
+.d-nav button:hover span:last-child { text-decoration: underline; text-decoration-color: var(--underline); text-underline-offset: 4px; }
+.d-nav button[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer, .scrim, .link, .node { transition: none; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1 id="page-title">Knowledge Elicitation Map</h1>
+  </header>
+
+  <section id="intro" class="prose">
+    <div id="intro-text"></div>
+  </section>
+
+  <section id="explore" aria-labelledby="prompt">
+    <div class="explore-head">
+      <h2 id="prompt">What is the participant doing?</h2>
+      <div class="cats" id="cats" role="group" aria-label="Choose a branch"></div>
+    </div>
+    <div class="controls">
+      <div class="legend" id="legend" role="group" aria-label="Highlight a tradition"></div>
+      <div class="tags" id="tags" role="group" aria-label="Highlight a tag"></div>
+    </div>
+    <div class="swipe-hint">Swipe sideways to see the whole tree →</div>
+    <div class="tree-scroll" id="tree-scroll"><svg id="tree" role="img" aria-label="Tree of knowledge elicitation methods"></svg></div>
+  </section>
+
+  <div id="prose-after"></div>
+
+  <section id="every-method" aria-labelledby="every-h">
+    <h2 id="every-h">Every method</h2>
+    <div id="index"></div>
+  </section>
+
+  <section id="references">
+    <h2 id="ov-refs-h">References</h2>
+    <ul class="refs" id="ov-refs"></ul>
+  </section>
+
+  <div style="height:64px"></div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title" aria-hidden="true">
+  <div class="d-top">
+    <div class="d-crumb" id="d-crumb"></div>
+    <button class="icon-btn" id="d-close" type="button">close</button>
+  </div>
+  <h2 id="d-title" tabindex="-1"></h2>
+  <div class="d-lead" id="d-lead">
+    <p class="d-summary" id="d-summary"></p>
+  </div>
+  <div class="d-trads" id="d-trads"></div>
+  <dl class="d-meta" id="d-meta"></dl>
+  <div id="d-body"></div>
+</aside>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+const DATA = {"title":"Knowledge Elicitation Map","intro":["As a researcher working in human centered AI, I've always found it difficult to navigate research scattered across the disciplines. This is especially true for knowledge elicitation methods, so I've created this living resource as I collect and learn. I've organized it by what each method asks participants to do."],"sections":[{"name":"Why knowledge elicitation?","id":"why-knowledge-elicitation","paras":["Knowledge elicitation was central to early AI. In the 1980s, expert systems depended on researchers extracting specialists' knowledge and translating it into rules. This created the knowledge acquisition bottleneck: eliciting enough accurate knowledge was labor intensive, and the resulting rules were difficult to maintain.","Machine learning changed how AI acquires knowledge. Rather than asking experts to articulate rules, researchers increasingly trained models on large datasets.","A review of knowledge elicitation in ML found that experts were primarily treated as sources of input to the ML pipeline, asked to identify relevant features, provide labels, or evaluate models. These tasks assume researchers have already defined the problem and decided how to represent it computationally. In my research, this meant engineers could contribute their expertise directly, while teachers had to advocate for theirs and rely on engineers to translate it into technical decisions.","Traditional knowledge elicitation starts earlier, allowing researchers to discover a domain through its practitioners. Rediscovering these methods may inspire new ways to represent human knowledge in machine learning."]}],"refs":["Cooke, N. J. (1994). Varieties of knowledge elicitation techniques. International Journal of Human-Computer Studies, 41(6), 801–849. <a href=\"https://doi.org/10.1006/ijhc.1994.1083\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1006/ijhc.1994.1083<\/a>","Hoffman, R. R., Shadbolt, N. R., Burton, A. M., &amp; Klein, G. (1995). Eliciting knowledge from experts: A methodological analysis. Organizational Behavior and Human Decision Processes, 62(2), 129–158.","Kerrigan, D., Hullman, J., &amp; Bertini, E. (2021). A survey of domain knowledge elicitation in applied machine learning. Multimodal Technologies and Interaction, 5(12), 73. <a href=\"https://doi.org/10.3390/mti5120073\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.3390/mti5120073<\/a>","Tan, M., Lee, H., Wang, D., &amp; Subramonyam, H. (2024). Is a seat at the table enough? Engaging teachers and students in dataset specification for ML in education. Proceedings of the ACM on Human-Computer Interaction, 8(CSCW1), Article 81. <a href=\"https://doi.org/10.1145/3637358\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1145/3637358<\/a>"],"categories":[{"name":"Interviews","level":2,"desc":"Participants explain their knowledge.","fields":[],"paras":[],"refs":[],"children":[{"name":"Teaching","level":3,"desc":"The expert explains or teaches what they know directly.","fields":[],"paras":[],"refs":[],"children":[{"name":"Tutorial interview","level":4,"desc":"","fields":[{"label":"Summary","paras":["An expert teaches the researcher an introductory lesson about their domain."]},{"label":"Origins","paras":["Tutorial interviews emerged in 1980s knowledge engineering, building on interviews and case walkthroughs. They helped researchers learn a domain through an expert because textbooks and standard definitions often missed experts' specialized terminology."]},{"label":"Method","paras":["The researcher asks a domain expert to prepare an introductory lesson of approximately one hour, covering the main concepts and ideas in their field. The expert determines what to teach and how to organize it, while the researcher asks questions for clarification. The researcher records and transcribes the lesson, then analyzes it to identify important concepts, terminology, and relationships."]},{"label":"Examples","paras":["Cottam and Shadbolt (1998) worked with a search and rescue coordination center to understand how experts plan rescue operations. They began with documentation and recorded tutorial interviews, then moved to explanations of specific rescue incidents. The tutorial interviews established their initial understanding of the domain.","Morgan and colleagues (2019) studied how speech and language therapists decide what to work on with preschool children with developmental speech and language disorders. After identifying ten themes describing therapy goals, they asked 37 therapists to explain each theme as though speaking to a parent. They compared the explanations to identify missing details and differences in interpretation."],"images":[{"src":"images/studies/cottam.jpg","caption":"Cottam and Shadbolt (1998)","para":0},{"src":"images/studies/morgan.jpg","caption":"Morgan and colleagues (2019)","para":1}]}],"paras":[],"refs":["Neale, I. M. (1988). First generation expert systems: A review of knowledge acquisition methodologies. <em>The Knowledge Engineering Review, 3<\/em>(2), 105–145. <a href=\"https://doi.org/10.1017/S0269888900004288\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1017/S0269888900004288<\/a>","Boose, J. H. (1989). A survey of knowledge acquisition techniques and tools. <em>Knowledge Acquisition, 1<\/em>(1), 3–37. <a href=\"https://doi.org/10.1016/S1042-8143(89)80003-2\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1016/S1042-8143(89)80003-2<\/a>","Cottam, H., &amp; Shadbolt, N. (1998). Knowledge acquisition for search and rescue planning. <em>International Journal of Human-Computer Studies, 48<\/em>(4), 449–473. <a href=\"https://doi.org/10.1006/ijhc.1997.0193\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1006/ijhc.1997.0193<\/a>","Morgan, L., Marshall, J., Harding, S., Powell, G., Wren, Y., Coad, J., &amp; Roulstone, S. (2019). ‘It depends’: Characterizing speech and language therapy for preschool children with developmental speech and language disorders. <em>International Journal of Language &amp; Communication Disorders, 54<\/em>(6), 954–970. <a href=\"https://doi.org/10.1111/1460-6984.12498\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1111/1460-6984.12498<\/a>"],"traditions":["Knowledge Engineering / AI"],"path":["Interviews","Teaching"],"id":"tutorial-interview","hasContent":true},{"name":"Teachback","level":4,"desc":"","fields":[{"label":"Summary","paras":["The researcher explains an expert's knowledge back to them for correction."]},{"label":"Origins","paras":["Teachback originated in 1970s research on learning, where students explained what they had learned to demonstrate their understanding. Knowledge engineers adapted the method for expert systems research in the 1980s."]},{"label":"Method","paras":["The expert explains a concept or procedure, then the researcher teaches it back in their own words or demonstrates it by solving a problem. The expert corrects misunderstandings, and the researcher tries again until the expert agrees."]},{"label":"Example","paras":["Hoerner and colleagues (2023) investigated how factory workers diagnose and fix production problems, including defects in product coatings. They observed 36 workers troubleshooting problems on a manufacturing line. An analyst recorded the workers' actions, then conducted teachback interviews: the analyst described what they had observed, and workers corrected the descriptions or added missing details. Researchers used these explanations to develop 228 sets of troubleshooting rules."],"images":[{"src":"images/studies/hoerner.jpg","caption":"Hoerner and colleagues (2023)","para":0}]}],"paras":[],"refs":["Johnson, L., &amp; Johnson, N. E. (1987). Knowledge elicitation involving teachback interviewing. In A. L. Kidd (Ed.), <em>Knowledge acquisition for expert systems: A practical handbook<\/em> (pp. 91–108). Plenum Press. <a href=\"https://doi.org/10.1007/978-1-4613-1823-1_5\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1007/978-1-4613-1823-1_5<\/a>","Hoerner, L., Schamberger, M., &amp; Bodendorf, F. (2023). Using tacit expert knowledge to support shop-floor operators through a knowledge-based assistance system. <em>Computer Supported Cooperative Work, 32<\/em>, 55–91. <a href=\"https://doi.org/10.1007/s10606-022-09445-4\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1007/s10606-022-09445-4<\/a>"],"traditions":["Knowledge Engineering / AI"],"path":["Interviews","Teaching"],"id":"teachback","hasContent":true},{"name":"Knowledge audit","level":4,"desc":"","fields":[{"label":"Summary","paras":["Experts recall experiences in response to prompts about different aspects of their expertise."]},{"label":"Tags","paras":["Cognitive Task Analysis"]},{"label":"Origins","paras":["The knowledge audit was developed in the 1990s from research comparing experts and novices. Earlier methods like the Critical Decision Method required lengthy interviews about specific incidents, so researchers developed a faster way to identify the skills that distinguish experts."]},{"label":"Method","paras":["The researcher interviews an expert using eight prompts about different aspects of expertise, including noticing subtle cues, anticipating what will happen, recognizing anomalies, improvising, and using tricks of the trade. For each, the expert recalls a specific experience. The researcher asks what cues they noticed, what strategies they used, and why a novice would have struggled in the same situation."]},{"label":"Example","paras":["McAndrew and Gore (2013) studied how experienced financial traders make decisions under uncertainty. They interviewed eight day traders, first mapping the stages of a trade and then using knowledge audit prompts to investigate difficult decisions, such as when to enter a market and how much to trade. One trader described detecting sudden movements in minor currencies. Experienced traders placed trades immediately, while novices could miss the opportunity by spending too long trying to explain the movement."],"images":[{"src":"images/studies/mcandrew.jpg","caption":"McAndrew and Gore (2013)","para":0}]}],"paras":[],"refs":["Militello, L. G., &amp; Hutton, R. J. B. (1998). Applied cognitive task analysis (ACTA): A practitioner's toolkit for understanding cognitive task demands. <em>Ergonomics, 41<\/em>(11), 1618–1641. <a href=\"https://doi.org/10.1080/001401398186108\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1080/001401398186108<\/a>","McAndrew, C., &amp; Gore, J. (2013). Understanding preferences in experience-based choice: A study of cognition in the “wild.” <em>Journal of Cognitive Engineering and Decision Making, 7<\/em>(2), 179–197. <a href=\"https://doi.org/10.1177/1555343412463922\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1177/1555343412463922<\/a>"],"traditions":["Psychology / Cognitive Science"],"path":["Interviews","Teaching"],"id":"knowledge-audit","hasContent":true}],"path":["Interviews"]},{"name":"Artifacts","level":3,"desc":"The participant discusses materials or records.","fields":[],"paras":[],"refs":[],"children":[{"name":"Photo elicitation","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants discuss photographs and the experiences or meanings they evoke."]},{"label":"Origins","paras":["Anthropologist John Collier developed photo elicitation in the 1950s while studying how families in Canada's Maritime Provinces adapted to migration, industrial work, and changing communities. Photographs prompted participants to recall details and discuss experiences that conventional interviews missed. The method later spread through visual anthropology and sociology."]},{"label":"Method","paras":["Researchers introduce photographs into an interview, either selecting existing images or asking participants to take photographs beforehand. Participants examine the pictures and explain what they show, what they mean, and what experiences or memories they bring to mind."]},{"label":"Example","paras":["Epstein and colleagues (2006) interviewed 35 children who had attended a summer camp for children with cancer. They showed 13 photographs of camp places and activities, including a climbing wall, cabins, a medical building, and a lake. Children chose pictures to discuss and described what happened there and how they felt. The photographs also prompted discussion of people and places missing from the pictures and of camp rules."],"images":[{"src":"images/studies/epstein.jpg","caption":"Epstein and colleagues (2006)","para":0}]}],"paras":[],"refs":["Harper, D. (2002). Talking about pictures: A case for photo elicitation. <em>Visual Studies, 17<\/em>(1), 13–26. <a href=\"https://doi.org/10.1080/14725860220137345\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1080/14725860220137345<\/a>","Collier, J., Jr. (1957). Photography in anthropology: A report on two experiments. <em>American Anthropologist, 59<\/em>(5), 843–859. <a href=\"https://doi.org/10.1525/aa.1957.59.5.02a00100\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1525/aa.1957.59.5.02a00100<\/a>","Epstein, I., Stevens, B., McKeever, P., &amp; Baruchel, S. (2006). Photo elicitation interview (PEI): Using photos to elicit children's perspectives. <em>International Journal of Qualitative Methods, 5<\/em>(3), 1–11. <a href=\"https://doi.org/10.1177/160940690600500301\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1177/160940690600500301<\/a>"],"traditions":["Anthropology / Ethnography","Sociology / Qualitative Research"],"path":["Interviews","Artifacts"],"id":"photo-elicitation","hasContent":true},{"name":"Work product elicitation","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants explain artifacts they have created or used."]},{"label":"Origins","paras":["Artifact elicitation developed from visual elicitation in anthropology and sociology, particularly photo elicitation. Researchers extended the use of photographs to physical objects, documents, work products, and other materials that participants could discuss during interviews."]},{"label":"Method","paras":["Participants bring an artifact they have created or used, such as a document, tool, assignment, or prototype. Researchers ask them to describe its features, demonstrate how it works, explain decisions made during its creation, and discuss the knowledge and skills involved. Participants can point to specific parts as they explain their thinking."]},{"label":"Example","paras":["Eyerman and colleagues (2018) interviewed girls in an afterschool engineering program about projects they had built, including foam robots, water filters, and structures made from toothpicks and gumdrops. In 102 video-recorded interviews, participants showed their projects and explained how they designed, tested, and improved them. One girl pointed to parts of her robot while explaining how she could add an arm and program it to move. Participants could often explain decisions using their projects even when they struggled to describe engineering design in abstract terms."],"images":[{"src":"images/studies/eyerman.jpg","caption":"Eyerman and colleagues (2018)","para":0}]}],"paras":[],"refs":["Douglas, E. P., Jordan, S. S., Lande, M., &amp; Bumbaco, A. E. (2015). Artifact elicitation as a method of qualitative inquiry in engineering education. In <em>Proceedings of the 2015 ASEE Annual Conference &amp; Exposition<\/em>. <a href=\"https://doi.org/10.18260/p.23574\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.18260/p.23574<\/a>","Eyerman, S., Hug, S., McLeod, E., &amp; Tauer, T. (2018). Uncovering K-12 youth engineering design thinking through artifact elicitation interviews. In <em>Proceedings of the 2018 ASEE Annual Conference &amp; Exposition<\/em>. <a href=\"https://doi.org/10.18260/1-2--31163\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.18260/1-2--31163<\/a>"],"traditions":["Sociology / Qualitative Research","Human-Computer Interaction / Design Research"],"path":["Interviews","Artifacts"],"id":"work-product-elicitation","hasContent":true},{"name":"Diagram elicitation","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants review and correct researcher-prepared diagrams."]},{"label":"Origins","paras":["Graphic elicitation draws on visual interviewing in anthropology and sociology and on engineering design research. It also draws on member checking, in which researchers return their interpretations to participants for critique."]},{"label":"Method","paras":["Researchers prepare diagrams representing their understanding of a process, system, or domain, often based on earlier interviews. Participants examine the diagrams, identify missing elements, incorrect relationships, or misleading assumptions, and suggest changes."]},{"label":"Example","paras":["Crilly and colleagues (2006) interviewed industrial designers about what determines a product's appearance. After seven initial interviews, they drew a diagram showing relationships between designers, clients, and consumers and presented it to 12 more designers. One designer pointed out that clients often communicate directly with consumers, a connection missing from the diagram."],"images":[{"src":"images/studies/crilly.jpg","caption":"Crilly and colleagues (2006)","para":0}]}],"paras":[],"refs":["Crilly, N., Blackwell, A. F., &amp; Clarkson, P. J. (2006). Graphic elicitation: Using research diagrams as interview stimuli. <em>Qualitative Research, 6<\/em>(3), 341–366. <a href=\"https://doi.org/10.1177/1468794106065007\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1177/1468794106065007<\/a>"],"traditions":["Sociology / Qualitative Research"],"path":["Interviews","Artifacts"],"id":"diagram-elicitation","hasContent":true},{"name":"Trace interviews","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants explain their own digital activity records."]},{"label":"Origins","paras":["Trace interviews grew out of digital ethnography and research using online activity records to study behavior. Dubois and Ford (2015) combined digital trace analysis with interviews to ask participants about what they actually did online."]},{"label":"Method","paras":["Researchers collect participants' digital activity records, such as browsing histories, social media interactions, or app usage logs, and turn them into charts, timelines, or network diagrams. During interviews, participants examine their own data and explain particular actions, unexpected patterns, or missing information."]},{"label":"Example","paras":["Gajardo and colleagues (2026) tracked websites and apps used by adults in the UK and Brazil, then interviewed 73 participants using charts of their browsing activity, most visited websites, and routes to news sites. One participant remembered reading CNN through Facebook links only after seeing CNN in his data. The records prompted people to recall news habits they had forgotten."],"images":[{"src":"images/studies/gajardo.jpg","caption":"Gajardo and colleagues (2026)","para":0}]}],"paras":[],"refs":["Dubois, E., &amp; Ford, H. (2015). Trace interviews: An actor-centered approach. <em>International Journal of Communication, 9<\/em>, 2067–2091. <a href=\"https://ijoc.org/index.php/ijoc/article/view/3378\" target=\"_blank\" rel=\"noopener\">https://ijoc.org/index.php/ijoc/article/view/3378<\/a>","Gajardo, C., Kalogeropoulos, A., Rossini, P., Mont’Alverne, C., &amp; Nicholls, T. (2026). Evaluating the potential and limits of trace-based interviews when studying news use. <em>Information, Communication &amp; Society<\/em>. <a href=\"https://doi.org/10.1080/1369118X.2026.2652514\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1080/1369118X.2026.2652514<\/a>"],"traditions":["Sociology / Qualitative Research","Human-Computer Interaction / Design Research"],"path":["Interviews","Artifacts"],"id":"trace-interviews","hasContent":true}],"path":["Interviews"]},{"name":"Scenarios","level":3,"desc":"The participant works through or recalls a situation.","fields":[],"paras":[],"refs":[],"children":[{"name":"Critical incident technique","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants recount specific incidents of success or failure."]},{"label":"Origins","paras":["Developed during World War II by the U.S. Army Air Forces' Aviation Psychology Program to identify behaviors associated with successful and unsuccessful pilot performance. Instructors often explained failures using vague judgments such as “poor judgment” or “unsuitable temperament,” so researchers collected descriptions of specific actions and their consequences. Flanagan formalized the technique in 1954."]},{"label":"Method","paras":["Researchers ask participants to recall a specific incident in which something went particularly well or badly. They ask what led up to it, exactly what the people involved said or did, and what happened afterward. They compare incidents to identify recurring behaviors and circumstances associated with success or failure."]},{"label":"Example","paras":["Bitner and colleagues (1990) interviewed customers about particularly good or bad experiences with airlines, hotels, and restaurants, collecting approximately 700 incidents. They asked when each incident happened, what led up to it, what employees said or did, and why it was memorable. Employee responses to service failures, special requests, and unexpected situations shaped how customers remembered their experiences."],"images":[{"src":"images/studies/bitner.jpg","caption":"Bitner and colleagues (1990)","para":0}]}],"paras":[],"refs":["Flanagan, J. C. (1954). The critical incident technique. <em>Psychological Bulletin, 51<\/em>(4), 327–358. <a href=\"https://doi.org/10.1037/h0061470\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1037/h0061470<\/a>","Bitner, M. J., Booms, B. H., &amp; Tetreault, M. S. (1990). The service encounter: Diagnosing favorable and unfavorable incidents. <em>Journal of Marketing, 54<\/em>(1), 71–84. <a href=\"https://doi.org/10.1177/002224299005400105\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1177/002224299005400105<\/a>"],"traditions":["Psychology / Cognitive Science","Sociology / Qualitative Research"],"path":["Interviews","Scenarios"],"id":"critical-incident-technique","hasContent":true},{"name":"Critical decision method","level":4,"desc":"","fields":[{"label":"Summary","paras":["Experts reconstruct a difficult incident, explaining their decisions at key moments."]},{"label":"Tag","paras":["Cognitive Task Analysis"]},{"label":"Origins","paras":["Developed by Gary Klein and colleagues in the 1980s while studying how experienced firefighters make decisions under pressure. It belongs to Naturalistic Decision Making, which investigates real decisions under uncertainty and time pressure. It extends the Critical Incident Technique to examine the cues and reasoning behind experts' decisions."]},{"label":"Method","paras":["Researchers ask an expert to recall a difficult or unusual incident involving important decisions. The interview proceeds in four passes: recount the incident; construct a timeline of events and decisions; revisit key moments to ask what the expert noticed, expected, considered, and knew; and ask what-if questions, such as what a novice might have missed or what would change if information were unavailable."]},{"label":"Example","paras":["Rimstad and Sollid (2015) investigated emergency response after the 2011 Oslo bombing. They interviewed the ambulance commander for 90 minutes using the Critical Decision Method, repeatedly reconstructing the incident timeline and asking about decisions and alternatives. Most critical decisions occurred in the first 30 minutes, when commanders still lacked reliable information about the scale of the disaster."],"images":[{"src":"images/studies/rimstad.jpg","caption":"Rimstad and Sollid (2015)","para":0}]}],"paras":[],"refs":["Klein, G. A., Calderwood, R., &amp; MacGregor, D. (1989). Critical decision method for eliciting knowledge. <em>IEEE Transactions on Systems, Man, and Cybernetics, 19<\/em>(3), 462–472. <a href=\"https://doi.org/10.1109/21.31053\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1109/21.31053<\/a>","Hoffman, R. R., Crandall, B., &amp; Shadbolt, N. (1998). Use of the critical decision method to elicit expert knowledge: A case study in the methodology of cognitive task analysis. <em>Human Factors, 40<\/em>(2), 254–276.","Rimstad, R., &amp; Sollid, S. J. M. (2015). A retrospective observational study of medical incident command and decision-making in the 2011 Oslo bombing. <em>International Journal of Emergency Medicine, 8<\/em>, Article 4. <a href=\"https://doi.org/10.1186/s12245-015-0052-9\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1186/s12245-015-0052-9<\/a>"],"traditions":["Psychology / Cognitive Science","Knowledge Engineering / AI"],"path":["Interviews","Scenarios"],"id":"critical-decision-method","hasContent":true},{"name":"Stimulated recall","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants review recordings of their own performance and recall their thinking."]},{"label":"Origins","paras":["Benjamin Bloom developed stimulated recall in 1953 to study what students were thinking during lectures and classroom discussions. He replayed audio recordings of lessons and asked students to recall their thoughts at specific moments. Researchers later used the method to study teacher decisions and other activities where talking during performance is difficult."]},{"label":"Method","paras":["Researchers record a participant performing a real task, usually with video or audio. Soon afterward, the participant reviews the recording, pausing to describe what they noticed, thought, or decided at specific moments. The researcher asks follow-up questions about actions and decisions and analyzes the explanations alongside the recording."]},{"label":"Examples","paras":["Ding and colleagues (2026) filmed 12 experienced and 12 novice basketball coaches and the court during competitive games. They replayed moments when coaches changed tactics and asked what they had noticed and why they acted. One experienced coach noticed an opposing point guard moving to exploit a gap in the defense. Novices more often described reacting after opponents had already scored repeatedly.","Jennett and Affleck (1998) used patient charts to investigate physicians' clinical decisions and identify training needs. Researchers showed physicians records of patients they had treated and asked why they ordered tests, chose treatments, or managed cases as they did. Interviews identified circumstances and workplace constraints missing from the charts."],"images":[{"src":"images/studies/ding.jpg","caption":"Ding and colleagues (2026)","para":0},{"src":"images/studies/jennett.jpg","caption":"Jennett and Affleck (1998)","para":1}]}],"paras":[],"refs":["Calderhead, J. (1981). Stimulated recall: A method for research on teaching. <em>British Journal of Educational Psychology, 51<\/em>(2), 211–217. <a href=\"https://doi.org/10.1111/j.2044-8279.1981.tb02474.x\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1111/j.2044-8279.1981.tb02474.x<\/a>","Tripp, T., &amp; Rich, P. (2012). Using video to analyze one's own teaching. <em>British Journal of Educational Technology, 43<\/em>(4), 678–704.","Ding, G., Liu, F., Yang, F., &amp; Qin, K. (2026). Influence of coaching experience on in-game adaptability and decision-making among basketball coaches. <em>Scientific Reports, 16<\/em>, Article 6831. <a href=\"https://doi.org/10.1038/s41598-026-38226-y\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1038/s41598-026-38226-y<\/a>","Jennett, P., &amp; Affleck, L. (1998). Chart audit and chart stimulated recall as methods of needs assessment in continuing professional health education. <em>Journal of Continuing Education in the Health Professions, 18<\/em>(3), 163–171. <a href=\"https://doi.org/10.1002/chp.1340180306\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1002/chp.1340180306<\/a>"],"traditions":["Psychology / Cognitive Science","Sociology / Qualitative Research"],"path":["Interviews","Scenarios"],"id":"stimulated-recall","hasContent":true},{"name":"Simulation interview","level":4,"desc":"","fields":[{"label":"Summary","paras":["Experts work through a challenging scenario and explain how they would respond."]},{"label":"Tags","paras":["Cognitive Task Analysis"]},{"label":"Origins","paras":["Militello and Hutton developed simulation interviews in the 1990s as part of ACTA, a toolkit funded by the U.S. Navy to make methods from naturalistic decision-making research accessible to training and system designers. The method builds on studies of how experts recognize cues and make decisions in realistic situations."]},{"label":"Method","paras":["Researchers present an expert with a challenging scenario. The expert reviews or works through it, then identifies major events and decision points. For each, the interviewer asks what the expert thought was happening, what they would do, which cues informed their judgment, what alternatives they considered, and what mistakes a novice might make."]},{"label":"Example","paras":["Pickup and colleagues (2019) presented 12 doctors, nurses, and midwives with a hypothetical newborn resuscitation case. The baby was not breathing and had a heart rate below 60 beats per minute. Assisted breaths failed to move the chest, and the heart rate remained low after compressions. At each stage, participants explained what they would do, what information they needed, and what mistakes inexperienced clinicians might make. Their answers informed requirements for a new heart rate monitor."],"images":[{"src":"images/studies/pickup.jpg","caption":"Pickup and colleagues (2019)","para":0}]}],"paras":[],"refs":["Militello, L. G., &amp; Hutton, R. J. B. (1998). Applied cognitive task analysis (ACTA): A practitioner's toolkit for understanding cognitive task demands. <em>Ergonomics, 41<\/em>(11), 1618–1641. <a href=\"https://doi.org/10.1080/001401398186108\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1080/001401398186108<\/a>","Pickup, L., Lang, A., Shipley, L., Henry, C., Carpenter, J., McCartney, D., Butler, M., Hayes-Gill, B., &amp; Sharkey, D. (2019). Development of a clinical interface for a novel newborn resuscitation device: Human factors approach to understanding cognitive user requirements. <em>JMIR Human Factors, 6<\/em>(2), e12055. <a href=\"https://doi.org/10.2196/12055\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.2196/12055<\/a>"],"traditions":["Psychology / Cognitive Science","Knowledge Engineering / AI"],"path":["Interviews","Scenarios"],"id":"simulation-interview","hasContent":true}],"path":["Interviews"]}],"path":[]},{"name":"Tasks","level":2,"desc":"Participants do an activity that reveals their knowledge.","fields":[],"paras":[],"refs":[],"children":[{"name":"Mapping","level":3,"desc":"Participants make explicit representations of concepts, relationships, or steps.","fields":[],"paras":[],"refs":[],"children":[{"name":"Repertory grid","level":4,"desc":"","fields":[{"label":"Summary","paras":["Experts compare examples in groups of three, identifying how two are alike and different from the third."]},{"label":"Origins","paras":["Developed by clinical psychologist George Kelly in the 1950s as part of Personal Construct Theory, which proposed that people understand the world through categories and distinctions they construct. Originally used in psychotherapy to study how people perceived themselves and others. Adopted in 1980s knowledge engineering to elicit experts' categories and decision criteria."]},{"label":"Method","paras":["The researcher selects examples from a domain, such as tasks, people, or cases. The expert examines three examples at a time and identifies how two are alike and different from the third. The researcher records both ends of the distinction and repeats with other groups of three. The expert then rates all examples against each distinction, producing a grid."]},{"label":"Example","paras":["Tomico and colleagues (2009) studied how 17 Dutch and 16 Japanese industrial designers evaluated pens. Each designer compared sets of three pens, identified a characteristic that distinguished one from the other two, and then rated all six pens on the characteristics they identified. Japanese designers emphasized writing comfort, balance, and functionality. Dutch designers emphasized appearance, novelty, and the image a pen conveys about its owner."],"images":[{"src":"images/studies/tomico.jpg","caption":"Tomico and colleagues (2009)","para":0}]}],"paras":[],"refs":["Curtis, A. M., Wells, T. M., Lowry, P. B., &amp; Higbee, T. (2008). An overview and tutorial of the repertory grid technique in information systems research. <em>Communications of the Association for Information Systems, 23<\/em>, 37–62. <a href=\"https://doi.org/10.17705/1CAIS.02303\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.17705/1CAIS.02303<\/a>","Kelly, G. A. (1955). <em>The psychology of personal constructs<\/em>. Norton.","Fransella, F., Bell, R., &amp; Bannister, D. (2004). <em>A manual for repertory grid technique<\/em> (2nd ed.). Wiley.","Tomico, O., Karapanos, E., Lévy, P., Mizutani, N., &amp; Yamanaka, T. (2009). The repertory grid technique as a method for the study of cultural differences. <em>International Journal of Design, 3<\/em>(3), 55–63."],"traditions":["Psychology / Cognitive Science","Knowledge Engineering / AI"],"path":["Tasks","Mapping"],"id":"repertory-grid","hasContent":true},{"name":"Concept mapping","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants draw concepts as nodes connected by labeled relationships."]},{"label":"Origins","paras":["Joseph Novak developed concept mapping at Cornell in 1972 while studying changes in children's understanding of science. Drawing on David Ausubel's theory of meaningful learning, he used maps to represent relationships between ideas that were difficult to identify from interviews alone. Knowledge engineers adopted concept maps in the late 1980s and 1990s."]},{"label":"Method","paras":["The participant identifies the main concepts in a subject, writes them in nodes, and connects them with labeled lines. Each connection forms a statement, such as “thunderstorms produce lightning.” Participants typically start with a question to focus the map, place broader concepts above more specific ones, and revise the connections as their understanding develops."]},{"label":"Example","paras":["Coffey and colleagues (2002) interviewed nine U.S. Navy meteorologists about forecasting weather along Florida's Gulf Coast. They built 26 interconnected maps covering thunderstorms, fog, hurricanes, and local weather patterns, repeatedly reviewing them with experts to correct relationships and fill gaps. The maps informed updates to manuals and training materials for new forecasters."],"images":[{"src":"images/studies/coffey.jpg","caption":"Coffey and colleagues (2002)","para":0}]}],"paras":[],"refs":["Novak, J. D., &amp; Cañas, A. J. (2008). <em>The theory underlying concept maps and how to construct and use them<\/em> (Technical Report IHMC CmapTools 2006-01, Rev. 01-2008). Institute for Human and Machine Cognition.","Novak, J. D., &amp; Gowin, D. B. (1984). <em>Learning how to learn<\/em>. Cambridge University Press.","Coffey, J. W., Hoffman, R. R., Cañas, A. J., &amp; Ford, K. M. (2002). A concept map-based knowledge modeling approach to expert knowledge sharing. In <em>Proceedings of the IASTED International Conference on Information and Knowledge Sharing<\/em> (pp. 212–217)."],"traditions":["Psychology / Cognitive Science","Knowledge Engineering / AI"],"path":["Tasks","Mapping"],"id":"concept-mapping","hasContent":true},{"name":"Relational maps","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants map people or organizations and their relationships."]},{"label":"Origins","paras":["Rooted in sociometry, developed by Jacob Moreno in the 1930s to study relationships using sociograms showing who was connected to whom. Later used in qualitative research to explore personal relationships and in participatory research to map organizational networks and influence."]},{"label":"Method","paras":["Participants identify people or organizations involved in their lives or a situation and draw how they relate. They may use distance to indicate closeness, lines to distinguish relationships, or other markings for importance and influence. Researchers ask why they arranged the map as they did."]},{"label":"Examples","paras":["Bagnoli (2009) asked teenagers to draw themselves at the center of a page and place important people closer or farther away. One teenager placed her mother and grandmother closest to herself.","Schiffer and Hauck (2010) worked with a water management board in northern Ghana. Members mapped organizations involved in managing the river basin, using colored lines to show who provided instructions, money, information, or advice, and stacks of counters to indicate influence. They compared maps to identify organizations that could help the board achieve its goals."],"images":[{"src":"images/studies/bagnoli.jpg","caption":"Bagnoli (2009)","para":0},{"src":"images/studies/schiffer.jpg","caption":"Schiffer and Hauck (2010)","para":1}]}],"paras":[],"refs":["Bagnoli, A. (2009). Beyond the standard interview: The use of graphic elicitation and arts-based methods. <em>Qualitative Research, 9<\/em>(5), 547–570. <a href=\"https://doi.org/10.1177/1468794109343625\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1177/1468794109343625<\/a>","Schiffer, E., &amp; Hauck, J. (2010). Net-Map: Collecting social network data and facilitating network learning through participatory influence network mapping. <em>Field Methods, 22<\/em>(3), 231–249. <a href=\"https://doi.org/10.1177/1525822X10374798\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1177/1525822X10374798<\/a>"],"traditions":["Sociology / Qualitative Research","Anthropology / Ethnography"],"path":["Tasks","Mapping"],"id":"relational-maps","hasContent":true},{"name":"Timelines","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants mark important events along a timeline and explain them."]},{"label":"Origins","paras":["Rooted in life history research, especially sociology's study of biographies in relation to social and historical events. Later used as a visual interviewing method."]},{"label":"Method","paras":["The participant draws a line representing a period, such as their life or career, and marks important events along it. They choose which events matter and where to position them. The researcher asks about the events, transitions, and connections between them."]},{"label":"Example","paras":["Sheridan and colleagues (2011) studied nine women who had lost substantial amounts of weight and maintained the loss for at least five years. Across four interviews, each woman worked with a researcher to plot her weight over time and mark events such as pregnancies, illnesses, weddings, and periods of binge eating."],"images":[{"src":"images/studies/sheridan.jpg","caption":"Sheridan and colleagues (2011)","para":0}]}],"paras":[],"refs":["Adriansen, H. K. (2012). Timeline interviews: A tool for conducting life history research. <em>Qualitative Studies, 3<\/em>(1), 40–55. <a href=\"https://doi.org/10.7146/qs.v3i1.6272\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.7146/qs.v3i1.6272<\/a>","Sheridan, J., Chamberlain, K., &amp; Dupuis, A. (2011). Timelining: Visualizing experience. <em>Qualitative Research, 11<\/em>(5), 552–569. <a href=\"https://doi.org/10.1177/1468794111413235\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1177/1468794111413235<\/a>"],"traditions":["Sociology / Qualitative Research","Anthropology / Ethnography"],"path":["Tasks","Mapping"],"id":"timelines","hasContent":true},{"name":"Task analysis","level":4,"desc":"","fields":[{"label":"Summary","paras":["Experts break a task into steps, identifying the actions, decisions, and information required."]},{"label":"Tag","paras":["Cognitive Task Analysis"]},{"label":"Origins","paras":["Task analysis has roots in early 20th-century studies of industrial work by Frederick Taylor and Frank and Lillian Gilbreth. Annett and Duncan developed Hierarchical Task Analysis in the 1960s for industrial training. Later cognitive task analysis methods examined the judgments and decisions involved in skilled work."]},{"label":"Method","paras":["Researchers ask experts to break a task into its major steps and identify the actions, decisions, and information required at each step. In ACTA task diagrams, experts identify three to six major steps and highlight those requiring difficult judgments. In Hierarchical Task Analysis, researchers break goals into smaller subtasks and specify their order and conditions. Other diagrams show how activities and information flow between people or systems, where tasks overlap, and where timing or resource constraints affect performance."]},{"label":"Example","paras":["Li and colleagues (2022) studied whether commercial aircraft could operate with one pilot instead of two. They recorded five flights and spoke with ten pilots about approach and landing. They divided landing into four phases and mapped the tasks and responsibilities of captains and first officers. The maps helped researchers consider which responsibilities could move to automation or ground support."],"images":[{"src":"images/studies/li.jpg","caption":"Li and colleagues (2022)","para":0}]}],"paras":[],"refs":["Stanton, N. A. (2006). Hierarchical task analysis: Developments, applications, and extensions. <em>Applied Ergonomics, 37<\/em>(1), 55–79. <a href=\"https://doi.org/10.1016/j.apergo.2005.06.003\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1016/j.apergo.2005.06.003<\/a>","Militello, L. G., &amp; Hutton, R. J. B. (1998). Applied cognitive task analysis (ACTA): A practitioner's toolkit for understanding cognitive task demands. <em>Ergonomics, 41<\/em>(11), 1618–1641. <a href=\"https://doi.org/10.1080/001401398186108\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1080/001401398186108<\/a>","Annett, J., &amp; Duncan, K. D. (1967). Task analysis and training design. <em>Occupational Psychology, 41<\/em>, 211–221.","Li, M., Wang, M., Ding, D., &amp; Wang, G. (2022). Development and evaluation of single pilot operations with the human-centered design approach. <em>Aerospace, 9<\/em>(10), 601. <a href=\"https://doi.org/10.3390/aerospace9100601\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.3390/aerospace9100601<\/a>"],"traditions":["Psychology / Cognitive Science","Knowledge Engineering / AI"],"path":["Tasks","Mapping"],"id":"task-analysis","hasContent":true}],"path":["Tasks"]},{"name":"Demonstrating","level":3,"desc":"Participants perform activities in natural or contrived settings.","fields":[],"paras":[],"refs":[],"children":[{"name":"Naturalistic performance","level":4,"desc":"","fields":[],"paras":[],"refs":[],"children":[{"name":"Participant observation","level":5,"desc":"","fields":[{"label":"Summary","paras":["Researchers observe participants in their everyday settings, sometimes joining their activities."]},{"label":"Origins","paras":["Rooted in anthropology's tradition of immersive fieldwork, particularly Bronisław Malinowski's work. Later widely used in sociology, including the Chicago School's studies of everyday social life."]},{"label":"Method","paras":["The researcher spends time where participants work or live, watches what they do, takes field notes, and may join everyday activities. Spradley describes three stages: descriptive observation to understand the setting, people, and activities; focused observation of practices that emerge as important; and selective observation of particular differences and patterns."]},{"label":"Example","paras":["Heath and Luff (1992) studied how London Underground control room staff coordinated train operations. They recorded employees working, conducted observations, and interviewed staff. Controllers and information assistants coordinated in part by overhearing colleagues' conversations and monitoring their movements, even when no message was addressed directly to them."],"images":[{"src":"images/studies/heath.jpg","caption":"Heath and Luff (1992)","para":0}]}],"paras":[],"refs":["Spradley, J. P. (1980). <em>Participant observation<\/em>. Holt, Rinehart and Winston.","Heath, C., &amp; Luff, P. (1992). Collaboration and control: Crisis management and multimedia technology in London Underground line control rooms. <em>Computer Supported Cooperative Work, 1<\/em>(1–2), 69–94. <a href=\"https://doi.org/10.1007/BF00752451\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1007/BF00752451<\/a>"],"traditions":["Anthropology / Ethnography","Sociology / Qualitative Research"],"path":["Tasks","Demonstrating","Naturalistic performance"],"id":"participant-observation","hasContent":true},{"name":"Shadowing","level":5,"desc":"","fields":[{"label":"Summary","paras":["Researchers follow individuals through their daily activities."]},{"label":"Origins","paras":["Rooted in organizational and management studies, including mid-20th-century research observing how managers spent their working days. Later developed as a qualitative method for studying everyday work and decisions in context."]},{"label":"Method","paras":["The researcher follows one person through their normal workday, accompanying them between activities, meetings, and locations. They record what the person does, whom they interact with, interruptions, decisions, and changes in activity. They may ask brief questions during the day or conduct follow-up interviews."]},{"label":"Example","paras":["Perlow (1999) studied a software engineering team at a Fortune 500 company over nine months. She shadowed all 17 team members for at least half a day each and recorded every activity as it occurred. Engineers frequently interrupted one another to request help, making individual work difficult to finish. The workplace rewarded solving urgent problems, which kept the interruptions going."],"images":[{"src":"images/studies/perlow.jpg","caption":"Perlow (1999)","para":0}]}],"paras":[],"refs":["McDonald, S. (2005). Studying actions in context: A qualitative shadowing method for organizational research. <em>Qualitative Research, 5<\/em>(4), 455–473. <a href=\"https://doi.org/10.1177/1468794105056923\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1177/1468794105056923<\/a>","Perlow, L. A. (1999). The time famine: Toward a sociology of work time. <em>Administrative Science Quarterly, 44<\/em>(1), 57–81. <a href=\"https://doi.org/10.2307/2667031\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.2307/2667031<\/a>"],"traditions":["Sociology / Qualitative Research","Anthropology / Ethnography"],"path":["Tasks","Demonstrating","Naturalistic performance"],"id":"shadowing","hasContent":true}],"path":["Tasks","Demonstrating"],"id":"naturalistic-performance","hasContent":false},{"name":"Contrived performance","level":4,"desc":"","fields":[],"paras":[],"refs":[],"children":[{"name":"Role-playing","level":5,"desc":"","fields":[{"label":"Summary","paras":["Participants act out situations in assigned roles."]},{"label":"Origins","paras":["Rooted in Scandinavian participatory design, drawing on theater, including Augusto Boal's Forum Theatre, and improvisation. Designers used role-playing to act out work situations and proposed technologies."]},{"label":"Method","paras":["Participants take assigned roles in a realistic or imagined situation and act out what they would say or do, sometimes using props or a mock environment. Researchers observe the actions and interactions, then discuss what happened. The group can repeat the scene using different tools or arrangements."]},{"label":"Example","paras":["Hornecker and colleagues (2002) staged two simulated neighborhood meetings about redesigning a bus route. Participants played roles including a college student, working mother, and elderly resident. They placed houses on a digital map, negotiated walking distances to stops, and proposed routes. One participant playing a single mother objected to a stop because getting her child there would be difficult."],"images":[{"src":"images/studies/hornecker.jpg","caption":"Hornecker and colleagues (2002)","para":0}]}],"paras":[],"refs":["Brandt, E., &amp; Grunnet, C. (2000). Evoking the future: Drama and props in user centered design. In <em>Proceedings of the Participatory Design Conference 2000<\/em>.","Hornecker, E., Eden, H., &amp; Scharff, E. (2002). “In MY situation, I would dislike THAAAT!” Role play as assessment method for tools supporting participatory planning. In <em>Proceedings of the Participatory Design Conference 2002<\/em>."],"traditions":["Human-Computer Interaction / Design Research"],"path":["Tasks","Demonstrating","Contrived performance"],"id":"role-playing","hasContent":true},{"name":"Wizard of Oz","level":5,"desc":"","fields":[{"label":"Summary","paras":["Participants interact with a prototype secretly controlled by a researcher."]},{"label":"Origins","paras":["Rooted in experimental psychology and human factors research on computer interfaces. John Kelley popularized the method in the 1980s to study interactions with technologies that did not yet work autonomously, including natural language interfaces."]},{"label":"Method","paras":["Participants interact with a prototype that appears to function on its own, but a hidden researcher controls some or all of its responses. Researchers record what participants say, do, and expect from the simulated system."]},{"label":"Examples","paras":["Gould and colleagues (1983) studied writing letters by speaking to a computer before reliable speech recognition was available. Participants dictated letters and saw words appear on a screen, believing the system recognized speech. A typist in another room actually entered the words. Researchers simulated recognition limits, including displaying “XXXX” for unknown words.","Brown and colleagues (2024) placed two robotic trash cans in a busy New York City plaza. Hidden operators steered them toward pedestrians and controlled their responses. Researchers watched people attract the robots' attention, put trash into them, and show others how the robots worked."],"images":[{"src":"images/studies/gould.jpg","caption":"Gould and colleagues (1983)","para":0},{"src":"images/studies/brown.jpg","caption":"Brown and colleagues (2024)","para":1}]}],"paras":[],"refs":["Kelley, J. F. (1984). An iterative design methodology for user-friendly natural language office information applications. <em>ACM Transactions on Office Information Systems, 2<\/em>(1), 26–41. <a href=\"https://doi.org/10.1145/357417.357420\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1145/357417.357420<\/a>","Gould, J. D., Conti, J., &amp; Hovanyecz, T. (1983). Composing letters with a simulated listening typewriter. <em>Communications of the ACM, 26<\/em>(4), 295–308. <a href=\"https://doi.org/10.1145/2163.358100\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1145/2163.358100<\/a>","Brown, B., Bu, F., Mandel, I., &amp; Ju, W. (2024). Trash in motion: Emergent interactions with a robotic trashcan. In <em>Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems<\/em> (Article 591). <a href=\"https://doi.org/10.1145/3613904.3642610\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1145/3613904.3642610<\/a>"],"traditions":["Human-Computer Interaction / Design Research"],"path":["Tasks","Demonstrating","Contrived performance"],"id":"wizard-of-oz","hasContent":true},{"name":"Simulated task performance","level":5,"desc":"","fields":[{"label":"Summary","paras":["Experts perform tasks in an environment that reproduces their work conditions."]},{"label":"Origins","paras":["Rooted in experimental psychology and aviation research using flight simulators to study pilots. Later expanded to computer simulations and simplified environments for studying complex decisions without the risks or constraints of real tasks."]},{"label":"Method","paras":["Researchers build an environment that reproduces important parts of the expert's work, including equipment, information, time pressures, or changing conditions. Experts perform tasks in the simulation while researchers record actions, decisions, timing, and responses to unexpected events. Researchers can introduce problems or vary conditions across trials."]},{"label":"Example","paras":["Militello and colleagues (2023) had 102 anesthesiologists complete four simulated medical emergencies, followed by interviews. In one scenario, a patient developed breathing difficulties and low blood pressure after abdominal surgery. One physician initially suspected blood loss or insufficient medication, while another considered infection and sepsis. Interviews examined what each physician noticed, suspected, and did as the patient's condition deteriorated."],"images":[{"src":"images/studies/militello.jpg","caption":"Militello and colleagues (2023)","para":0}]}],"paras":[],"refs":["Gray, W. D. (2002). Simulated task environments: The role of high-fidelity simulations, scaled worlds, synthetic environments, and laboratory tasks in basic and applied cognitive research. <em>Cognitive Science Quarterly, 2<\/em>, 205–227.","Militello, L. G., Salwei, M. E., Reale, C., Sushereba, C., Slagle, J. M., Gaba, D., Weinger, M. B., Rask, J., Faiman, J., Andreae, M., Burden, A. R., &amp; Anders, S. (2023). Adapting cognitive task analysis methods for use in a large sample simulation study of high-risk healthcare events. <em>Journal of Cognitive Engineering and Decision Making, 17<\/em>(4), 315–331. <a href=\"https://doi.org/10.1177/15553434231192283\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1177/15553434231192283<\/a>"],"traditions":["Psychology / Cognitive Science","Knowledge Engineering / AI"],"path":["Tasks","Demonstrating","Contrived performance"],"id":"simulated-task-performance","hasContent":true},{"name":"Constrained-processing tasks","level":5,"desc":"","fields":[{"label":"Summary","paras":["Experts perform familiar tasks under constraints, such as limited time or information."]},{"label":"Origins","paras":["Draws on experimental studies of expertise, including experiments showing that chess masters can recognize and remember meaningful board positions after only a few seconds."]},{"label":"Method","paras":["Researchers give experts a familiar task but impose constraints, such as limited time, missing information, or a required judgment. Afterward, experts describe what they noticed and how they reasoned. Researchers examine which cues they used and how they made decisions without completing their usual process.","<strong>Limited time.<\/strong> Experts complete the task in far less time than it normally takes.","<strong>Limited information.<\/strong> Experts begin with only part of the information they normally use and may receive more as the task continues."]},{"label":"Examples","paras":["Hoffman (1987) describes experienced terrain analysts inspecting aerial photographs for two minutes, although the normal task could take hours or days. Immediately afterward, they described what they remembered and interpreted what the photographs showed.","Tolcott and colleagues (1989) gave pairs of Army intelligence analysts a simulated battlefield and asked which of three routes enemy forces would use. Analysts began with limited information, then received three rounds of reports, each with 15 pieces of information. They updated their predictions and confidence after each round and rated whether reports supported or contradicted their predictions."],"images":[{"src":"images/studies/hoffman.jpg","caption":"Hoffman (1987)","para":0},{"src":"images/studies/tolcott.jpg","caption":"Tolcott and colleagues (1989)","para":1}]}],"paras":[],"refs":["Hoffman, R. R. (1987). The problem of extracting the knowledge of experts from the perspective of experimental psychology. <em>AI Magazine, 8<\/em>(2), 53–67. <a href=\"https://doi.org/10.1609/aimag.v8i2.583\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1609/aimag.v8i2.583<\/a>","Tolcott, M. A., Marvin, F. F., &amp; Lehner, P. E. (1989). Expert decision-making in evolving situations. <em>IEEE Transactions on Systems, Man, and Cybernetics, 19<\/em>(3), 606–615. <a href=\"https://doi.org/10.1109/21.31066\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1109/21.31066<\/a>"],"traditions":["Psychology / Cognitive Science","Knowledge Engineering / AI"],"subtypes":["Limited time","Limited information"],"path":["Tasks","Demonstrating","Contrived performance"],"id":"constrained-processing-tasks","hasContent":true},{"name":"Twenty questions","level":5,"desc":"","fields":[{"label":"Summary","paras":["Experts ask questions to gather the information needed to solve a problem."]},{"label":"Origins","paras":["Adapted from the guessing game Twenty Questions for expert-system knowledge acquisition in the early 1980s. Grover (1983) described it as a way to uncover how experts organize problems and which information they seek before making decisions."]},{"label":"Method","paras":["The researcher presents a problem but little or no initial information. The expert asks questions to obtain the information needed to solve it, and the researcher answers each one. Researchers record the questions and their order to examine what information the expert seeks and how they narrow down solutions."]},{"label":"Examples","paras":["Schweickert and colleagues (1987) gave an industrial lighting expert four hypothetical inspection problems, each requiring a different kind of lighting. She asked about properties such as surface texture and transparency to choose lights. Two researchers independently analyzed the questions and explanations, extracting 50 agreed rules.","Gopalan and colleagues (2020) presented 29 South African critical care physicians with two hypothetical ICU referrals. A researcher played the referring doctor and initially supplied no patient information. Physicians could ask up to 20 questions before deciding whether to admit the patient. They asked about age in 76% of cases and patient wishes in 10%. After seeing the full information, 10 of 29 changed at least one decision."],"images":[{"src":"images/studies/schweickert.jpg","caption":"Schweickert and colleagues (1987)","para":0},{"src":"images/studies/gopalan.jpg","caption":"Gopalan and colleagues (2020)","para":1}]}],"paras":[],"refs":["Schweickert, R., Burton, A. M., Taylor, N. K., Corlett, E. N., Shadbolt, N. R., &amp; Hedgecock, A. P. (1987). Comparing knowledge elicitation techniques: A case study. <em>Artificial Intelligence Review, 1<\/em>(4), 245–253. <a href=\"https://doi.org/10.1007/BF00142925\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1007/BF00142925<\/a>","Gopalan, P. D., Pershad, S., &amp; Pillay, B. J. (2020). Decision-making in the ICU: An analysis of the ICU admission decision-making process using a '20 Questions' approach. <em>Southern African Journal of Critical Care, 36<\/em>(1). <a href=\"https://doi.org/10.7196/sajcc.2020.v36i1.398\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.7196/sajcc.2020.v36i1.398<\/a>"],"traditions":["Knowledge Engineering / AI","Psychology / Cognitive Science"],"path":["Tasks","Demonstrating","Contrived performance"],"id":"twenty-questions","hasContent":true}],"path":["Tasks","Demonstrating"],"id":"contrived-performance","hasContent":false},{"name":"Explanations","level":4,"desc":"","fields":[],"paras":[],"refs":[],"children":[{"name":"Contextual inquiry","level":5,"desc":"","fields":[{"label":"Summary","paras":["Researchers observe people working while asking questions about their actions and decisions."]},{"label":"Origins","paras":["Developed within Contextual Design, drawing on ethnographic fieldwork and apprenticeship. Researchers used it to understand people's work and gather requirements for software design."]},{"label":"Method","paras":["The researcher visits a person's workplace and watches them perform regular work. They take an apprentice role, treating the participant as the expert. The participant explains what they do, and the researcher interrupts with questions about decisions, tools, exceptions, and workarounds. The researcher shares interpretations that the participant can correct."]},{"label":"Example","paras":["All and Nourbakhsh (2001) studied interactions with live insects at a natural history museum to design a robot that would let visitors explore the insects' world up close. They conducted contextual inquiries with three museum staff members: a teenage docent, a guide running an insect-themed birthday party, and the head entomologist."],"images":[{"src":"images/studies/all.jpg","caption":"All and Nourbakhsh (2001)","para":0}]}],"paras":[],"refs":["Holtzblatt, K., &amp; Jones, S. (1993). Contextual inquiry: A participatory technique for system design. In D. Schuler &amp; A. Namioka (Eds.), <em>Participatory design: Principles and practices<\/em>. Lawrence Erlbaum Associates.","All, S., &amp; Nourbakhsh, I. R. (2001). Insect telepresence: Using robotic tele-embodiment to bring insects face-to-face with humans. <em>Autonomous Robots, 10<\/em>(2), 149–161. <a href=\"https://doi.org/10.1023/A:1008928012232\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1023/A:1008928012232<\/a>"],"traditions":["Human-Computer Interaction / Design Research"],"path":["Tasks","Demonstrating","Explanations"],"id":"contextual-inquiry","hasContent":true},{"name":"Think aloud protocols","level":5,"desc":"","fields":[{"label":"Summary","paras":["Participants verbalize their thoughts while performing a task."]},{"label":"Tag","paras":["Cognitive Task Analysis"]},{"label":"Origins","paras":["Rooted in cognitive psychology, particularly Newell and Simon's research in the 1960s and 1970s on problem solving. Researchers used verbalizations during tasks to investigate reasoning, planning, and decisions that could not be observed directly."]},{"label":"Method","paras":["Participants perform a task while saying whatever comes to mind, including what they notice, consider, calculate, or decide. Researchers record and transcribe the speech, prompting participants to keep talking if they fall silent but avoiding questions that ask them to explain or justify their thoughts. Researchers analyze the statements in sequence to reconstruct how participants approached the task."]},{"label":"Example","paras":["Chi and colleagues (1981) compared how physicists and novices approached mechanics problems. Two physicists and two novices read 20 problems while thinking aloud about how they would solve them. For a falling block compressing a spring, an expert immediately considered conservation of energy, while a novice retrieved separate formulas for gravity and springs."],"images":[{"src":"images/studies/chi.jpg","caption":"Chi and colleagues (1981)","para":0}]}],"paras":[],"refs":["Ericsson, K. A., &amp; Simon, H. A. (1980). Verbal reports as data. <em>Psychological Review, 87<\/em>(3), 215–251. <a href=\"https://doi.org/10.1037/0033-295X.87.3.215\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1037/0033-295X.87.3.215<\/a>","van Someren, M. W., Barnard, Y. F., &amp; Sandberg, J. A. C. (1994). <em>The think aloud method: A practical guide to modelling cognitive processes<\/em>. Academic Press.","Chi, M. T. H., Feltovich, P. J., &amp; Glaser, R. (1981). Categorization and representation of physics problems by experts and novices. <em>Cognitive Science, 5<\/em>(2), 121–152. <a href=\"https://doi.org/10.1207/s15516709cog0502_2\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1207/s15516709cog0502_2<\/a>"],"traditions":["Psychology / Cognitive Science"],"path":["Tasks","Demonstrating","Explanations"],"id":"think-aloud-protocols","hasContent":true},{"name":"Expert commentary","level":5,"desc":"","fields":[{"label":"Summary","paras":["One expert narrates another expert's task performance."]},{"label":"Also called","paras":["Collegial verbalization; concurrent observer narrative technique"]},{"label":"Origins","paras":["Developed in 1980s knowledge engineering, drawing on think aloud protocols. It was used when speaking during a task would be difficult or interfere with performance: another expert explains the performer's actions instead."]},{"label":"Method","paras":["One expert performs a task while a second expert watches and gives a running commentary about what the performer is doing and why. Researchers record the commentary and analyze it for decisions, strategies, and knowledge. The performer can concentrate on the task without having to speak."]},{"label":"Example","paras":["Jansson and colleagues (2006) studied how Swedish train drivers use information to operate safely and on schedule. They recorded six drivers on four real routes with cameras showing tracks and signals, the driver's face and hands, and the automatic train control display. Seven other professional train drivers watched the recordings and narrated their colleagues' actions."],"images":[{"src":"images/studies/jansson.jpg","caption":"Jansson and colleagues (2006)","para":0}]}],"paras":[],"refs":["McIlroy, R. C., &amp; Stanton, N. A. (2011). Observing the observer: Non-intrusive verbalisations using the concurrent observer narrative technique. <em>Cognition, Technology &amp; Work, 13<\/em>(2), 135–149. <a href=\"https://doi.org/10.1007/s10111-010-0160-5\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1007/s10111-010-0160-5<\/a>","Jansson, A., Olsson, E., &amp; Erlandsson, M. (2006). Bridging the gap between analysis and design: Improving existing driver interfaces with tools from the framework of cognitive work analysis. <em>Cognition, Technology &amp; Work, 8<\/em>(1), 41–49. <a href=\"https://doi.org/10.1007/s10111-005-0018-4\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1007/s10111-005-0018-4<\/a>"],"traditions":["Knowledge Engineering / AI","Psychology / Cognitive Science"],"path":["Tasks","Demonstrating","Explanations"],"id":"expert-commentary","hasContent":true}],"path":["Tasks","Demonstrating"],"id":"explanations","hasContent":false}],"path":["Tasks"]},{"name":"Judging","level":3,"desc":"Participants classify, sort, compare, rate, or make choices.","fields":[],"paras":[],"refs":[],"children":[{"name":"Rating","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants score examples on specified dimensions."]},{"label":"Method","paras":["The researcher presents examples, cases, or concepts and asks the expert to rate each on one or more dimensions, such as importance, difficulty, similarity, or likelihood. Researchers compare ratings across experts or examine which cases receive similar scores. Common response formats include the following.","<strong>Likert scale.<\/strong> Participants indicate agreement or disagreement using ordered response categories. Likert (1932) asked respondents to evaluate statements such as “The United States should have the largest military and naval air fleets in the world,” choosing Strongly Approve, Approve, Undecided, Disapprove, or Strongly Disapprove.","<strong>Semantic differential.<\/strong> Participants rate a word or concept along scales defined by opposing adjectives. Osgood (1952) studied the perceived meanings of words including <em>polite<\/em>, <em>eager<\/em>, and <em>burning<\/em> using scales such as strong–weak, active–passive, and hot–cold.","<strong>Magnitude estimation.<\/strong> Participants assign numerical values to perceived intensity. Stevens (1956) studied numerical estimates of how loud listeners perceived tones at different physical intensities.","<strong>Rubric-based rating.<\/strong> Participants assign scores using descriptions of performance at each level. Moskal (2000) presents a four-level holistic rubric for evaluating college students' written reports."]}],"paras":[],"refs":["Hoffman, R. R., Shadbolt, N. R., Burton, A. M., &amp; Klein, G. (1995). Eliciting knowledge from experts: A methodological analysis. <em>Organizational Behavior and Human Decision Processes, 62<\/em>(2), 129–158. <a href=\"https://doi.org/10.1006/obhd.1995.1039\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1006/obhd.1995.1039<\/a>","Likert, R. (1932). A technique for the measurement of attitudes. <em>Archives of Psychology, 140<\/em>, 1–55.","Osgood, C. E. (1952). The nature and measurement of meaning. <em>Psychological Bulletin, 49<\/em>(3), 197–237. <a href=\"https://doi.org/10.1037/h0055737\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1037/h0055737<\/a>","Stevens, S. S. (1956). The direct estimation of sensory magnitudes: Loudness. <em>The American Journal of Psychology, 69<\/em>(1), 1–25. <a href=\"https://doi.org/10.2307/1418112\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.2307/1418112<\/a>","Moskal, B. M. (2000). Scoring rubrics: What, when and how? <em>Practical Assessment, Research, and Evaluation, 7<\/em>(1), Article 3. <a href=\"https://doi.org/10.7275/a5vq-7q66\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.7275/a5vq-7q66<\/a>"],"traditions":["Psychology / Cognitive Science"],"subtypes":["Likert scale","Semantic differential","Magnitude estimation","Rubric-based rating"],"path":["Tasks","Judging"],"id":"rating","hasContent":true,"image":"images/methods/rating.jpg"},{"name":"Sorting","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants group examples according to shared characteristics."]},{"label":"Origins","paras":["Rooted in psychology and George Kelly's Personal Construct Theory, which studies the categories people construct. Knowledge engineers used sorting in the 1980s and 1990s to elicit expert classifications for rule-based AI systems. It later became common in website navigation and information architecture research."]},{"label":"Method","paras":["Researchers give participants cards, pictures, or objects and ask them to group them using one characteristic at a time. Researchers ask which criterion participants used, repeat with different criteria, and compare where participants agree or disagree.","<strong>Open sorting.<\/strong> Participants choose the groups and explain them.","<strong>Closed sorting.<\/strong> Researchers specify categories or rules."]},{"label":"Example","paras":["Reese and colleagues (2018) studied how clinicians organize patient information to improve electronic health records. Thirty-nine ICU clinicians openly sorted 29 patient data elements, including vital signs, lab results, medications, and notes. They grouped information into categories such as cardiovascular, respiratory, neurological, and infectious disease information. Researchers used the groups to propose a structure for ICU displays."]}],"paras":[],"refs":["Rugg, G., &amp; McGeorge, P. (1997). The sorting techniques: A tutorial paper on card sorts, picture sorts and item sorts. <em>Expert Systems, 14<\/em>(2), 80–93. <a href=\"https://doi.org/10.1111/1468-0394.00045\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1111/1468-0394.00045<\/a>","Rugg, G., Corbridge, C., Major, N. P., Burton, A. M., &amp; Shadbolt, N. R. (1992). A comparison of sorting techniques in knowledge acquisition. <em>Knowledge Acquisition, 4<\/em>(3), 279–291. <a href=\"https://doi.org/10.1016/1042-8143(92)90005-T\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1016/1042-8143(92)90005-T<\/a>","Reese, T., et al. (2018). Patient information organization in the intensive care setting: Expert knowledge elicitation with card sorting methods. <em>Journal of the American Medical Informatics Association, 25<\/em>(8), 1026–1035. <a href=\"https://doi.org/10.1093/jamia/ocy045\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1093/jamia/ocy045<\/a>"],"traditions":["Psychology / Cognitive Science","Knowledge Engineering / AI","Human-Computer Interaction / Design Research"],"subtypes":["Open sorting","Closed sorting"],"path":["Tasks","Judging"],"id":"sorting","hasContent":true,"image":"images/methods/sorting.jpg"},{"name":"Comparative judgment","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants compare pairs of examples on a specified dimension."]},{"label":"Origins","paras":["Comparative judgment originated in experimental psychology and psychophysics, the study of perceived differences between stimuli. Thurstone extended comparisons of physical properties, such as weight and shades of gray, to subjective qualities including handwriting and drawing quality."]},{"label":"Method","paras":["Researchers present two specimens at a time and ask which is better, greater, more likely, or more representative on a specified dimension. They collect judgments across multiple pairs and use the results to estimate a scale of perceived quality. Thurstone (1927) used handwriting samples as an example."]},{"label":"Example","paras":["Humphry and colleagues (2023) collected 324 student narrative writing samples. Teachers made 6,541 pairwise judgments about which piece demonstrated more advanced writing skills. A Bradley–Terry–Luce model converted the judgments into scale positions. Researchers selected eight samples at different quality levels for each year group to serve as assessment reference points."]}],"paras":[],"refs":["Thurstone, L. L. (1927). A law of comparative judgment. <em>Psychological Review, 34<\/em>(4), 273–286. <a href=\"https://doi.org/10.1037/h0070288\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1037/h0070288<\/a>","Humphry, S., Adie, L., Maxwell, C., &amp; Sappl, S. (2023). Using pairwise comparison and ordered exemplars as a basis for a novel method of standard setting in narrative writing. <em>Frontiers in Education, 8<\/em>, Article 1183695. <a href=\"https://doi.org/10.3389/feduc.2023.1183695\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.3389/feduc.2023.1183695<\/a>"],"traditions":["Psychology / Cognitive Science","Knowledge Engineering / AI"],"path":["Tasks","Judging"],"id":"comparative-judgment","hasContent":true,"image":"images/methods/comparative-judgment.jpg"},{"name":"Q-sort","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants arrange statements according to their level of agreement."]},{"label":"Origins","paras":["William Stephenson developed Q methodology in 1935. Trained in psychology and physics, he worked with Charles Spearman, a pioneer of factor analysis. While traditional factor analysis examines correlations between traits across people, Q methodology compares people's complete patterns of responses."]},{"label":"Method","paras":["Researchers prepare statements about a topic. Each participant sorts them according to a question, commonly from most agree to most disagree. Researchers compare complete sorts across participants to identify shared patterns of opinion and the statements that distinguish viewpoints."]},{"label":"Example","paras":["Bavin and colleagues (2020) studied attitudes toward reintroducing pine martens in Wales. They interviewed nine residents, collected 95 statements, and reduced them to 30. Twenty-nine other participants sorted the statements from −5 to +5. The researchers identified four viewpoints: Environmental Protectionist, Natural Resource Steward, Cautious Pragmatist, and Concerned Manager. Three broadly supported reintroduction for different reasons; the fourth opposed it, particularly over farming and predators."]}],"paras":[],"refs":["Brown, S. R. (1993). A primer on Q methodology. <em>Operant Subjectivity, 16<\/em>(3/4), 91–138. <a href=\"https://doi.org/10.15133/j.os.1993.002\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.15133/j.os.1993.002<\/a>","Bavin, D., MacPherson, J., Denman, H., Crowley, S. L., &amp; McDonald, R. A. (2020). Using Q-methodology to understand stakeholder perspectives on a carnivore translocation. <em>People and Nature, 2<\/em>(4), 1117–1130. <a href=\"https://doi.org/10.1002/pan3.10139\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1002/pan3.10139<\/a>"],"traditions":["Psychology / Cognitive Science"],"path":["Tasks","Judging"],"id":"q-sort","hasContent":true,"image":"images/methods/q-sort.jpg"},{"name":"Delphi","level":4,"desc":"","fields":[{"label":"Summary","paras":["Experts independently provide judgments, review aggregated responses, and reconsider their answers across rounds."]},{"label":"Origins","paras":["Developed at the RAND Corporation in the early 1950s. It grew out of operations research and forecasting, where researchers needed predictions based on expert judgment when data were limited."]},{"label":"Method","paras":["Researchers assemble a panel of experts and ask them to independently suggest ideas, judgments, or concerns, often through an open-ended questionnaire. They combine responses into items for experts to rate or rank, then summarize the results and disagreements. Experts reconsider their answers in another round. The process can repeat to examine agreement, disagreement, and changes after feedback."]},{"label":"Example","paras":["Dalkey and Helmer (1963) asked seven experts, including economists, a systems analyst, and an electronics engineer, to estimate how many atomic bombs would reduce Soviet munitions production by a specified amount in a hypothetical war. Initial estimates differed sharply, from 50 to 5,000. Researchers asked about assumptions and information needed, supplied data on industrial production and World War II bombing damage, and invited revised estimates. Estimates converged, though the study could not establish which were correct."]}],"paras":[],"refs":["Hsu, C., &amp; Sandford, B. A. (2007). The Delphi technique: Making sense of consensus. <em>Practical Assessment, Research, and Evaluation, 12<\/em>(1), Article 10. <a href=\"https://doi.org/10.7275/pdz9-th90\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.7275/pdz9-th90<\/a>","Dalkey, N., &amp; Helmer, O. (1963). An experimental application of the Delphi method to the use of experts. <em>Management Science, 9<\/em>(3), 458–467. <a href=\"https://doi.org/10.1287/mnsc.9.3.458\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1287/mnsc.9.3.458<\/a>"],"traditions":["Decision Science / Operations Research"],"path":["Tasks","Judging"],"id":"delphi","hasContent":true,"image":"images/methods/delphi.jpg"}],"path":["Tasks"]},{"name":"Creating","level":3,"desc":"Participants create materials or designs.","fields":[],"paras":[],"refs":[],"children":[{"name":"Cultural probes","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants complete creative activities in their everyday lives using materials provided by researchers."]},{"label":"Origins","paras":["Rooted in artistic practices associated with the Situationists, Surrealists, and Dadaists, later adapted for interaction design. Gaver and colleagues described probes as a source of “inspiration, not information.”"]},{"label":"Method","paras":["Researchers prepare a package of activities that participants complete in their everyday lives and return. Materials can include postcards with questions, maps to mark, cameras with photography assignments, and diaries. Researchers examine what participants produce to inspire further investigation and design."]},{"label":"Example","paras":["In the Presence Project, Gaver and colleagues (1999) explored how technology could help older adults in Norway, the Netherlands, and Italy participate in their communities. Participants received stamped postcards with questions, maps and stickers for marking places where they met people or wanted to visit, disposable cameras with assignments, and diaries. Some maps also asked participants to mark places to be alone, daydream, or identify local landmarks and places where people injected drugs."]}],"paras":[],"refs":["Gaver, B., Dunne, T., &amp; Pacenti, E. (1999). Cultural probes. <em>interactions, 6<\/em>(1), 21–29. <a href=\"https://doi.org/10.1145/291224.291235\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1145/291224.291235<\/a>"],"traditions":["Human-Computer Interaction / Design Research"],"path":["Tasks","Creating"],"id":"cultural-probes","hasContent":true,"image":"images/methods/cultural-probes.jpg"},{"name":"Participatory drawing","level":4,"desc":"","fields":[],"paras":[],"refs":[],"children":[{"name":"Artwork","level":5,"desc":"","fields":[{"label":"Summary","paras":["Participants draw their experiences or understanding of a topic."]},{"label":"Origins","paras":["Draws on anthropology's use of visual materials to understand people's lives, psychology's use of children's drawings, and sociology's use of images to document social life."]},{"label":"Method","paras":["The researcher asks a participant to draw something relevant to the research question, such as how they experience an illness, see themselves, or understand a situation. The participant chooses what to depict and how. The researcher then asks them to explain the drawing and its elements."]},{"label":"Examples","paras":["Guillemin (2004) interviewed participants attending menopause clinics and patients with heart disease about their experiences. She then gave them blank cards and colored felt pens and asked them to draw how they visualized their condition. Participants explained their drawings afterward.","Literat (2013) described drawing activities in The Modern Story, a digital storytelling program in Indian public schools. Asked what her community looked like, a 13-year-old drew wealthy landowners in a large house at the top, her family in a modest house with animals, and Dalit families as small figures without a house. In another exercise, students drew self-portraits before and after the course; one after drawing showed a student outdoors with her smiling parents."],"images":[{"src":"images/studies/literat.jpg","caption":"Literat (2013)","para":1}]}],"paras":[],"refs":["Guillemin, M. (2004). Understanding illness: Using drawings as a research method. <em>Qualitative Health Research, 14<\/em>(2), 272–289. <a href=\"https://doi.org/10.1177/1049732303260445\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1177/1049732303260445<\/a>","Literat, I. (2013). “A pencil for your thoughts”: Participatory drawing as a visual research method with children and youth. <em>International Journal of Qualitative Methods, 12<\/em>(1), 84–98. <a href=\"https://doi.org/10.1177/160940691301200143\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1177/160940691301200143<\/a>"],"traditions":["Sociology / Qualitative Research"],"path":["Tasks","Creating","Participatory drawing"],"id":"artwork","hasContent":true,"image":"images/methods/artwork.jpg"},{"name":"Maps (participatory mapping)","level":5,"desc":"","fields":[{"label":"Summary","paras":["Participants draw or annotate maps of familiar places."]},{"label":"Method","paras":["Researchers ask community members to draw maps of a familiar area or annotate existing maps, marking locations, resources, boundaries, routes, or problems. Researchers ask participants to explain their markings and record the discussions."]}],"paras":[],"refs":["Chambers, R. (2006). Participatory mapping and geographic information systems: Whose map? Who is empowered and who disempowered? Who gains and who loses? <em>The Electronic Journal of Information Systems in Developing Countries, 25<\/em>(1), 1–11. <a href=\"https://doi.org/10.1002/j.1681-4835.2006.tb00163.x\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1002/j.1681-4835.2006.tb00163.x<\/a>"],"traditions":["Anthropology / Ethnography","Sociology / Qualitative Research"],"path":["Tasks","Creating","Participatory drawing"],"id":"maps-participatory-mapping","hasContent":true,"image":"images/methods/maps-participatory-mapping.jpg"}],"path":["Tasks","Creating"],"id":"participatory-drawing","hasContent":false},{"name":"Participatory design","level":4,"desc":"","fields":[{"label":"Summary","paras":["Participants collaborate with designers to develop or improve systems."]},{"label":"Origins","paras":["Developed in Scandinavia during the 1970s and 1980s through workplace democracy and cooperative systems design. Researchers involved workers in designing the tools they would use to understand their work practices, needs, priorities, and ideas for future work."]},{"label":"Method","paras":["People who will use a proposed system or service work with researchers and designers to develop it. Depending on the project, they identify problems with current tools, sketch alternatives, build mockups, act out situations, or evaluate prototypes. Researchers use their designs and responses to revise the system."]}],"paras":[],"refs":["Spinuzzi, C. (2005). The methodology of participatory design. <em>Technical Communication, 52<\/em>(2), 163–174.","Schuler, D., &amp; Namioka, A. (Eds.). (1993). <em>Participatory design: Principles and practices<\/em>. Lawrence Erlbaum Associates."],"children":[{"name":"Participatory design workshops","level":5,"desc":"","fields":[{"label":"Summary","paras":["Participants collectively identify problems and develop design proposals."]},{"label":"Broader approach","paras":["Participatory design"]},{"label":"Method","paras":["Participants work together to identify problems, generate ideas, develop designs, and refine proposals, often across several sessions."]},{"label":"Example","paras":["Reddy and colleagues (2019) wanted to improve medication safety for older adults using over-the-counter medicines. They organized six participatory design sessions with pharmacy staff and patients. Participants identified barriers, proposed solutions, narrowed and combined ideas, developed an intervention, reacted to a prototype, and refined it."]}],"paras":[],"refs":["Reddy, A., Lester, C. A., Stone, J. A., Holden, R. J., Phelan, C. H., &amp; Chui, M. A. (2019). Applying participatory design to a pharmacy system intervention. <em>Research in Social and Administrative Pharmacy, 15<\/em>(11), 1358–1367. <a href=\"https://doi.org/10.1016/j.sapharm.2018.11.012\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1016/j.sapharm.2018.11.012<\/a>"],"traditions":["Human-Computer Interaction / Design Research"],"path":["Tasks","Creating","Participatory design"],"id":"participatory-design-workshops","hasContent":true,"image":"images/methods/participatory-design-workshops.jpg"},{"name":"Future workshops","level":5,"desc":"","fields":[{"label":"Summary","paras":["Participants critique current problems, imagine ideal futures, and plan feasible actions."]},{"label":"Broader approach","paras":["Participatory design"]},{"label":"Origins","paras":["Developed to allow ordinary citizens to envision and shape social change. Future workshops were later used in cooperative systems design."]},{"label":"Method","paras":["A future workshop has three phases. In <strong>critique<\/strong>, participants identify problems, write criticisms on paper or sticky notes, group them by theme, and select issues to address. In <strong>fantasy<\/strong>, they imagine possibilities without worrying about feasibility, using brainstorming, stories, drawings, or role-playing. In <strong>implementation<\/strong>, they review the visions, assess feasibility, choose ideas, and develop actions or proposals."]},{"label":"Example","paras":["Ursin and colleagues (2021) held a two-day climate workshop in Norway with 38 young people aged 10–18 to gather ideas for a county climate strategy."]}],"paras":[],"refs":["Kensing, F., &amp; Madsen, K. H. (1991). Generating visions: Future workshops and metaphors. In J. Greenbaum &amp; M. Kyng (Eds.), <em>Design at work: Cooperative design of computer systems<\/em> (pp. 155–168). Lawrence Erlbaum Associates.","Jungk, R., &amp; Müllert, N. R. (1987). <em>Future workshops: How to create desirable futures<\/em>. Institute for Social Inventions.","Ursin, M., Lorgen, L. C., Ortega Alvarado, I. A., Smalsundmo, A.-L., Nordgård, R. C., Bern, M. R., &amp; Bjørnevik, K. (2021). Promoting intergenerational justice through participatory practices: Climate workshops as an arena for young people’s political participation. <em>Frontiers in Psychology, 12<\/em>, Article 727227. <a href=\"https://doi.org/10.3389/fpsyg.2021.727227\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.3389/fpsyg.2021.727227<\/a>"],"traditions":["Human-Computer Interaction / Design Research"],"path":["Tasks","Creating","Participatory design"],"id":"future-workshops","hasContent":true,"image":"images/methods/future-workshops.jpg"},{"name":"Generative toolkits","level":5,"desc":"","fields":[{"label":"Summary","paras":["Participants arrange provided visual materials into collages or models to express their ideas."]},{"label":"Broader approach","paras":["Participatory design"]},{"label":"Origins","paras":["Developed within participatory design. In an early 1980s project to design a voice-controlled headset for preschool children, Sanders used activities such as coloring pictures of headsets, selecting among nine painted headsets, and constructing objects. This led toward toolkits that let people express ideas visually without training as designers."]},{"label":"Method","paras":["Researchers prepare a set of materials, such as photographs, stickers, colored shapes, words, and sketches, that participants can select, combine, rearrange, and extend. Participants respond to a prompt about an experience, their understanding of a situation, or something they want in the future. They arrange the materials into a collage, map, story, or model and explain what they made. Researchers use the artifacts to understand participants' ideas or begin designing with them."]},{"label":"Examples","paras":["Sanders (2000) describes activities for representing health experiences and mapping an ideal pet store.","Sanders and Stappers (2008) describe nurses arranging shapes to show an ideal workflow on a patient floor, then using 3D models to develop a new pod design for the hospital layout."],"images":[{"src":"images/studies/sanders-2000.jpg","caption":"Sanders (2000)","para":0},{"src":"images/studies/sanders-2008.jpg","caption":"Sanders and Stappers (2008)","para":1}]}],"paras":[],"refs":["Sanders, E. B.-N. (2000). Generative tools for co-designing. In S. A. R. Scrivener, L. J. Ball, &amp; A. Woodcock (Eds.), <em>Collaborative design<\/em> (pp. 3–12). Springer. <a href=\"https://doi.org/10.1007/978-1-4471-0779-8_1\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1007/978-1-4471-0779-8_1<\/a>","Sanders, E. B.-N., &amp; Stappers, P. J. (2008). Co-creation and the new landscapes of design. <em>CoDesign, 4<\/em>(1), 5–18. <a href=\"https://doi.org/10.1080/15710880701875068\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1080/15710880701875068<\/a>"],"traditions":["Human-Computer Interaction / Design Research"],"path":["Tasks","Creating","Participatory design"],"id":"generative-toolkits","hasContent":true,"image":"images/methods/generative-toolkits.jpg"},{"name":"PICTIVE","level":5,"desc":"","fields":[{"label":"Summary","paras":["Participants collaboratively construct interface mockups using paper and movable elements."]},{"label":"Broader approach","paras":["Participatory design"]},{"label":"Method","paras":["The researcher brings users and designers together around a shared workspace. They use paper, sticky notes, labels, markers, and prepared interface elements to construct a proposed screen or system. Participants move, replace, and annotate elements while discussing how the interface should work. Sessions are recorded on video so the team can revisit design decisions and explanations."]},{"label":"Example","paras":["Osman and Hwang (2021) asked 20 adults aged 52–75 with online shopping experience to design shopping pages. Each received a paper browser window and cutouts for product images, prices, descriptions, reviews, quantity selectors, and add-to-cart buttons. They designed one page for buying carrots, a relatively inexpensive purchase, and one for buying a wheelchair, a more expensive purchase. Participants could create missing elements using blank paper or sticky notes."]}],"paras":[],"refs":["Muller, M. J. (1991). PICTIVE: An exploration in participatory design. In <em>Proceedings of CHI ’91<\/em> (pp. 225–231). <a href=\"https://doi.org/10.1145/108844.108896\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1145/108844.108896<\/a>","Osman, R., &amp; Hwang, F. (2021). E-commerce design by older adults: The selection and placement of web objects on shopping sites. <em>Frontiers in Computer Science, 3<\/em>, Article 631241. <a href=\"https://doi.org/10.3389/fcomp.2021.631241\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.3389/fcomp.2021.631241<\/a>"],"traditions":["Human-Computer Interaction / Design Research"],"path":["Tasks","Creating","Participatory design"],"id":"pictive","hasContent":true,"image":"images/methods/pictive.jpg"}],"traditions":["Human-Computer Interaction / Design Research"],"path":["Tasks","Creating"],"id":"participatory-design","hasContent":true,"image":"images/methods/participatory-design.jpg"}],"path":["Tasks"]}],"path":[]}],"traditions":["Knowledge Engineering / AI","Psychology / Cognitive Science","Anthropology / Ethnography","Sociology / Qualitative Research","Human-Computer Interaction / Design Research","Decision Science / Operations Research"]};
+
+/* ---------- traditions ---------- */
+const SHORT = {
+  "Knowledge Engineering / AI": "Knowledge engineering",
+  "Psychology / Cognitive Science": "Psychology",
+  "Anthropology / Ethnography": "Anthropology",
+  "Sociology / Qualitative Research": "Sociology",
+  "Human-Computer Interaction / Design Research": "HCI & design",
+  "Decision Science / Operations Research": "Decision science",
+};
+const ORDER = Object.keys(SHORT);
+const TRADS = ORDER.filter(t => DATA.traditions.includes(t)).concat(DATA.traditions.filter(t => !ORDER.includes(t)));
+const tColor = t => `var(--t${Math.max(0, ORDER.indexOf(t)) % 6})`;
+const tShort = t => SHORT[t] || t;
+
+/* ---------- flatten ---------- */
+const strip = s => s.replace(/<[^>]+>/g, "");
+const methods = [];          // every node with an id, in document order
+const byId = new Map();
+function index(node, cat, parent) {
+  if (node.id) {
+    node._cat = cat; node._parent = parent;
+    node._text = (node.name + " " + node.fields.map(f => f.label + " " + f.paras.join(" ")).join(" ") + " " +
+      (node.traditions || []).join(" ")).toLowerCase();
+    node._text = strip(node._text);
+    node._tags = node.fields.filter(f => /^Tags?$/.test(f.label))
+      .flatMap(f => strip(f.paras.join(" ")).split(";").map(t => t.trim()).filter(Boolean));
+    methods.push(node); byId.set(node.id, node);
+  }
+  (node.children || []).forEach(c => index(c, cat, node));
+}
+DATA.categories.forEach(c => index(c, c, null));
+const readable = methods.filter(m => m.hasContent);
+const countIn = n => (n.id && n.hasContent ? 1 : 0) + (n.children || []).reduce((a, c) => a + countIn(c), 0);
+
+/* ---------- state ---------- */
+const state = { cat: DATA.categories[0].name, trad: null, tag: null, q: "" };
+function matches(m) {
+  if (!m.hasContent) return false;
+  if (state.trad && !(m.traditions || []).includes(state.trad)) return false;
+  if (state.tag && !m._tags.includes(state.tag)) return false;
+  if (state.q && !m._text.includes(state.q)) return false;
+  return true;
+}
+const filtering = () => !!(state.trad || state.tag || state.q);
+
+/* ---------- pie dot as CSS (for index + chips) ---------- */
+function pieCSS(trads) {
+  if (!trads || !trads.length) return "background: transparent; border: 1.5px solid var(--muted)";
+  if (trads.length === 1) return `background: ${tColor(trads[0])}`;
+  const step = 360 / trads.length;
+  return `background: conic-gradient(${trads.map((t, i) => `${tColor(t)} ${i * step}deg ${(i + 1) * step}deg`).join(",")})`;
+}
+
+/* ---------- header bits ---------- */
+
+const catsEl = document.getElementById("cats");
+const catOptions = DATA.categories.map(c => ({ name: c.name, desc: c.desc }));
+catOptions.forEach(o => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "cat-btn"; b.dataset.cat = o.name;
+  b.innerHTML = `<span class="t">${o.name}</span><span class="d">${o.desc}</span>`;
+  b.addEventListener("click", () => { state.cat = o.name; syncCats(); renderTree(true); });
+  catsEl.appendChild(b);
+});
+function syncCats() {
+  catsEl.querySelectorAll(".cat-btn").forEach(b => b.setAttribute("aria-pressed", b.dataset.cat === state.cat));
+}
+
+const legend = document.getElementById("legend");
+TRADS.forEach(t => {
+  const n = readable.filter(m => (m.traditions || []).includes(t)).length;
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "chip"; b.dataset.trad = t; b.title = t;
+  b.setAttribute("aria-pressed", "false");
+  b.innerHTML = `<span class="dot" style="background:${tColor(t)}"></span>${tShort(t)}`;
+  b.addEventListener("click", () => { state.trad = state.trad === t ? null : t; applyFilter(); });
+  legend.appendChild(b);
+});
+
+
+/* ---------- tree ---------- */
+const tagsEl = document.getElementById("tags");
+[...new Set(readable.flatMap(m => m._tags))].forEach(t => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "tag tag-btn"; b.dataset.tag = t; b.textContent = t;
+  b.setAttribute("aria-pressed", "false");
+  b.addEventListener("click", () => { state.tag = state.tag === t ? null : t; applyFilter(); });
+  tagsEl.appendChild(b);
+});
+
+const svg = d3.select("#tree");
+const measureCtx = document.createElement("canvas").getContext("2d");
+function textW(s, kind) {
+  measureCtx.font = kind === "method" ? "14px Geist, system-ui, sans-serif" : "600 14px Geist, system-ui, sans-serif";
+  return measureCtx.measureText(s).width;
+}
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let nodeSel, linkSel;
+
+function renderTree(animate) {
+  const both = state.cat === "Both";
+  const rootData = both ? { name: "Knowledge elicitation", level: 1, children: DATA.categories } :
+    DATA.categories.find(c => c.name === state.cat);
+  const root = d3.hierarchy(rootData, d => d.children);
+  const ROW = 30;
+  d3.tree().nodeSize([ROW, 1]).separation((a, b) => (a.parent === b.parent ? 1 : 1.35))(root);
+  const narrow = window.innerWidth < 640;
+  const COLX = both ? [0, 130, 280, 470, 700] : (narrow ? [0, 140, 320, 550] : [0, 160, 350, 580]);
+  root.each(d => { d.y = COLX[d.depth]; });
+
+  const kind = d => d.data.id ? "method" : "struct";
+  const labelLeft = d => !!d.children;
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  root.each(d => {
+    const w = textW(d.data.name, kind(d));
+    minX = Math.min(minX, d.x); maxX = Math.max(maxX, d.x);
+    minY = Math.min(minY, labelLeft(d) ? d.y - 14 - w : d.y);
+    maxY = Math.max(maxY, labelLeft(d) ? d.y : d.y + 14 + w);
+  });
+  const pad = 14;
+  const W = Math.ceil(maxY - minY + pad * 2), H = Math.ceil(maxX - minX + pad * 2 + 10);
+  svg.attr("width", W).attr("height", H).attr("viewBox", [minY - pad, minX - pad - 5, W, H].join(" "));
+  svg.selectAll("*").remove();
+
+  const dur = animate && !reduceMotion ? 550 : 0;
+  const ease = d3.easeCubicOut;
+  const linkPath = d3.linkHorizontal().x(p => p.y).y(p => p.x);
+  const gLinks = svg.append("g"), gNodes = svg.append("g");
+
+  linkSel = gLinks.selectAll("path").data(root.links()).join("path")
+    .attr("class", "link")
+    .attr("d", l => linkPath({ source: l.source, target: l.source }))
+    .call(s => dur ? s.transition().duration(dur).ease(ease).delay(l => l.source.depth * 60).attr("d", linkPath) : s.attr("d", linkPath));
+
+  nodeSel = gNodes.selectAll("g").data(root.descendants()).join("g")
+    .attr("class", d => {
+      const c = ["node"];
+      if (d.depth === 0) c.push("root");
+      if (d.data.id && d.children) c.push("group");
+      if (d.data.id) c.push(d.data.hasContent ? "method clickable" : "");
+      return c.join(" ");
+    })
+    .attr("transform", d => `translate(${(d.parent || d).y},${(d.parent || d).x})`)
+    .style("opacity", dur ? 0 : null);
+  if (!dur) nodeSel.attr("transform", d => `translate(${d.y},${d.x})`);
+  else nodeSel.transition().duration(dur).ease(ease).delay(d => Math.max(0, d.depth - 1) * 60)
+    .attr("transform", d => `translate(${d.y},${d.x})`).style("opacity", 1)
+    .on("end", function () { d3.select(this).style("opacity", null); });
+
+  // marks
+  const pie = d3.pie().value(1).sort(null), arc = d3.arc().innerRadius(0).outerRadius(6.5);
+  nodeSel.each(function (d) {
+    const g = d3.select(this);
+    if (d.data.id && d.data.hasContent && d.data.traditions && d.data.traditions.length) {
+      const t = d.data.traditions;
+      if (t.length === 1) g.append("circle").attr("r", 6.5).style("fill", tColor(t[0]));
+      else g.selectAll("path.w").data(pie(t)).join("path").attr("d", arc).style("fill", a => tColor(a.data));
+      g.append("circle").attr("class", "ring").attr("r", 7.25);
+    } else if (d.depth === 0) {
+      g.append("circle").attr("class", "solid").attr("r", 6);
+    } else {
+      g.append("circle").attr("class", "hollow").attr("r", 4.5);
+    }
+    const left = labelLeft(d);
+    const label = g.append("text")
+      .attr("class", kind(d) === "method" ? "lab-method" : "lab-struct")
+      .attr("x", left ? -13 : 13).attr("dy", "0.34em")
+      .attr("text-anchor", left ? "end" : "start")
+      .text(d.data.name);
+    if (d.data.id && d.data.hasContent) {
+      const w = textW(d.data.name, "method");
+      g.insert("rect", ":first-child").attr("class", "hit")
+        .attr("x", left ? -18 - w : -10).attr("y", -12).attr("width", w + 30).attr("height", 24).attr("rx", 4);
+      g.attr("tabindex", 0).attr("role", "button").attr("aria-label", `${d.data.name}: open details`)
+        .on("click", () => openMethod(d.data.id))
+        .on("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openMethod(d.data.id); } });
+    }
+    g.on("mouseenter focus", () => highlight(d, true)).on("mouseleave blur", () => highlight(d, false));
+  });
+  applyFilter();
+}
+
+function highlight(d, on) {
+  const anc = new Set(d.ancestors());
+  linkSel.classed("hl", l => on && anc.has(l.target));
+}
+
+function applyFilter() {
+  const active = filtering();
+  legend.classList.toggle("filtering", !!state.trad);
+  legend.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", b.dataset.trad === state.trad));
+  tagsEl.querySelectorAll(".tag-btn").forEach(b => b.setAttribute("aria-pressed", b.dataset.tag === state.tag));
+  const live = d => {
+    if (!active) return true;
+    if (d.data.id && matches(d.data)) return true;
+    return (d.children || []).some(live);
+  };
+  if (nodeSel) {
+    nodeSel.classed("dim", d => active && !live(d));
+    linkSel.classed("dim", l => active && !live(l.target));
+  }
+  document.querySelectorAll("#index li[data-id]").forEach(li => {
+    const m = byId.get(li.dataset.id);
+    const hit = !active || matches(m) || (m.children || []).some(matches);
+    li.classList.toggle("dim", !hit);
+  });
+}
+
+/* ---------- index ---------- */
+function methodItem(m) {
+  const li = document.createElement("li");
+  li.dataset.id = m.id;
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "mbtn" + (m.hasContent ? "" : " nocontent") + (m.children ? " parent" : "");
+  b.innerHTML = `<span class="pie" style="${pieCSS(m.hasContent ? m.traditions : null)}"></span><span>${m.name}</span>`;
+  if (m.hasContent) b.addEventListener("click", () => openMethod(m.id)); else b.tabIndex = -1;
+  li.appendChild(b);
+  if (m.children) {
+    const ul = document.createElement("ul");
+    m.children.forEach(c => ul.appendChild(methodItem(c)));
+    li.appendChild(ul);
+  }
+  if (m.subtypes) {
+    const ul = document.createElement("ul");
+    ul.className = "subtypes";
+    m.subtypes.forEach(name => {
+      const sli = document.createElement("li");
+      const sb = document.createElement("button");
+      sb.type = "button"; sb.className = "mbtn subtype"; sb.textContent = name;
+      sb.setAttribute("aria-label", `${name} (part of ${m.name})`);
+      sb.addEventListener("click", () => openMethod(m.id));
+      sli.appendChild(sb); ul.appendChild(sli);
+    });
+    li.appendChild(ul);
+  }
+  return li;
+}
+const idxEl = document.getElementById("index");
+DATA.categories.forEach(cat => {
+  const wrap = document.createElement("div"); wrap.className = "index-cat";
+  wrap.innerHTML = `<h3>${cat.name}</h3><p>${cat.desc}</p>`;
+  const grid = document.createElement("div"); grid.className = "index-grid";
+  (cat.children || []).forEach(br => {
+    const blk = document.createElement("div"); blk.className = "branch-block";
+    blk.innerHTML = `<h4>${br.name}</h4>${br.desc ? `<p>${br.desc}</p>` : ""}`;
+    const ul = document.createElement("ul");
+    (br.children || []).forEach(m => ul.appendChild(methodItem(m)));
+    blk.appendChild(ul); grid.appendChild(blk);
+  });
+  wrap.appendChild(grid); idxEl.appendChild(wrap);
+});
+
+/* ---------- prose ---------- */
+document.getElementById("page-title").textContent = DATA.title;
+document.getElementById("intro-text").innerHTML = DATA.intro.map(p => `<p>${p}</p>`).join("");
+document.getElementById("prose-after").innerHTML = DATA.sections.map(sec =>
+  `<section class="prose" id="${sec.id}"><h2>${sec.name}</h2>${sec.paras.map(p => `<p>${p}</p>`).join("")}</section>`).join("");
+const ovRefs = DATA.refs || [];
+document.getElementById("ov-refs").innerHTML = ovRefs.map(r => `<li>${r}</li>`).join("");
+document.getElementById("ov-refs-h").hidden = !ovRefs.length;
+
+/* ---------- drawer ---------- */
+const drawer = document.getElementById("drawer"), scrim = document.getElementById("scrim");
+const META = ["Summary", "Also called", "Tag", "Tags", "Broader approach"];
+const ORDER_FIELDS = l => /^Method/.test(l) ? 0 : /^Examples?$/.test(l) ? 1 : /^Origins/.test(l) ? 2 : 3;
+let lastFocus = null, currentId = null;
+
+// illustrations float beside the example paragraph they depict; a method without study images uses its own image
+function figImg(src, alt, cls = "d-fig") {
+  return `<img class="${cls}" src="${src}" alt="${alt.replace(/"/g, "&quot;")}" loading="lazy">`;
+}
+function exampleParas(f, m) {
+  const imgs = f.images || [];
+  return f.paras.map((p, pi) => {
+    let figs = imgs.filter(x => x.para === pi).map(x => figImg(x.src, `Illustration of ${x.caption}`)).join("");
+    // a full method illustration fills the first paragraph when no study image claims it
+    if (pi === 0 && !figs && m.image && (!imgs.length || m.image.startsWith("images/methods/"))) figs = figImg(m.image, `Illustration of ${m.name.toLowerCase()}`);
+    return figs ? `<div class="d-expara">${figs}<p>${p}</p></div>` : `<p>${p}</p>`;
+  }).join("");
+}
+
+function openMethod(id, fromHash) {
+  const m = byId.get(id);
+  if (!m || !m.hasContent) return;
+  if (!drawer.classList.contains("open")) lastFocus = document.activeElement;
+  currentId = id;
+  // sync tree to this method's category
+  if (state.cat !== "Both" && state.cat !== m._cat.name) { state.cat = m._cat.name; syncCats(); renderTree(false); }
+
+  const crumb = [...m.path.slice(), ];
+  document.getElementById("d-crumb").textContent = crumb.join(" / ");
+  document.getElementById("d-title").textContent = m.name;
+  document.getElementById("d-trads").innerHTML = (m.traditions || []).map(t =>
+    `<span class="chip" title="${t}"><span class="dot" style="background:${tColor(t)}"></span>${t}</span>`).join("");
+
+  const meta = m.fields.filter(f => META.includes(f.label));
+  const tags = meta.filter(f => /^Tags?$/.test(f.label))
+    .flatMap(f => strip(f.paras.join(" ")).split(";").map(t => t.trim()).filter(Boolean));
+  document.getElementById("d-trads").insertAdjacentHTML("beforeend", tags.map(t => `<span class="tag">${t}</span>`).join(""));
+  // the broader approach (e.g. Participatory design) shows as a pill that links to its page
+  const broaderField = meta.find(f => f.label === "Broader approach");
+  const broaderName = broaderField ? strip(broaderField.paras.join(" ")).trim()
+    : (m._parent && m._parent.hasContent ? m._parent.name : "");
+  const broader = broaderName && methods.find(x => x.name === broaderName && x.hasContent && x.id !== m.id);
+  if (broaderName) document.getElementById("d-trads").insertAdjacentHTML("beforeend",
+    broader ? `<a class="tag tag-link" href="#${broader.id}">${broader.name}</a>` : `<span class="tag">${broaderName}</span>`);
+  const metaHTML = meta.filter(f => !/^(Tags?|Summary|Broader approach)$/.test(f.label))
+    .map(f => `<dt>${f.label}</dt><dd>${f.paras.join(" ")}</dd>`).join("");
+  const metaEl = document.getElementById("d-meta");
+  metaEl.innerHTML = metaHTML; metaEl.hidden = !metaHTML;
+
+  const summary = m.fields.find(f => f.label === "Summary");
+  const sumEl = document.getElementById("d-summary");
+  sumEl.innerHTML = summary ? summary.paras.join(" ") : "";
+  // soft gradient across the method's tradition colors (a flat tint when there is only one)
+  const tcs = (m.traditions || []).map(tColor);
+  const tint = c => `color-mix(in srgb, ${c} 13%, var(--surface))`;
+  sumEl.style.background = !tcs.length ? "" : tcs.length === 1 ? tint(tcs[0])
+    : `linear-gradient(100deg, ${tcs.map(tint).join(", ")})`;
+  sumEl.style.borderColor = tcs.length ? `color-mix(in srgb, var(--fg) 9%, transparent)` : "";
+
+  const hasEx = m.fields.some(f => /^Examples?$/.test(f.label));
+  let body = m.fields.filter(f => !META.includes(f.label))
+    .map((f, i) => ({ f, i })).sort((a, b) => ORDER_FIELDS(a.f.label) - ORDER_FIELDS(b.f.label) || a.i - b.i)
+    .map(({ f }) => {
+      const isEx = /^Examples?$/.test(f.label);
+      // no example section: the method's illustration floats beside the Method text instead
+      const withFig = isEx || (!hasEx && /^Method/.test(f.label) && m.image);
+      return `<div class="d-sec${withFig ? " d-example" : ""}"><h3>${f.label}</h3>${withFig ? exampleParas(f, m) : f.paras.map(p => `<p>${p}</p>`).join("")}</div>`;
+    }).join("");
+  if (m.children && m.children.length) {
+    body += `<div class="d-sec"><h3>Variants</h3><ul class="d-variants">${m.children.map(c =>
+      `<li><a class="mbtn" href="#${c.id}"><span class="pie" style="${pieCSS(c.traditions)}"></span><span>${c.name}</span></a></li>`).join("")}</ul></div>`;
+  }
+  if (m.refs.length) {
+    body += `<details class="d-sec d-refs"><summary>${m.refs.length === 1 ? "Reference" : "References"} <span>${m.refs.length}</span></summary><ul class="refs">${m.refs.map(r => `<li>${r}</li>`).join("")}</ul></details>`;
+  }
+  document.getElementById("d-body").innerHTML = body;
+
+
+  drawer.classList.add("open"); scrim.classList.add("open");
+  drawer.setAttribute("aria-hidden", "false");
+  drawer.scrollTop = 0;
+  document.body.style.overflow = "hidden";
+  if (!fromHash && location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
+  requestAnimationFrame(() => document.getElementById("d-title").focus({ preventScroll: true }));
+}
+function closeDrawer() {
+  if (!drawer.classList.contains("open")) return;
+  drawer.classList.remove("open"); scrim.classList.remove("open");
+  drawer.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  currentId = null;
+  if (byId.has(location.hash.slice(1))) history.replaceState(null, "", "#explore");
+  if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+}
+document.getElementById("d-close").addEventListener("click", closeDrawer);
+scrim.addEventListener("click", closeDrawer);
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+
+function routeHash() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (byId.has(id)) openMethod(id, true); else if (currentId) closeDrawer();
+}
+window.addEventListener("hashchange", routeHash);
+
+/* ---------- boot ---------- */
+let lastW = window.innerWidth;
+window.addEventListener("resize", () => {
+  if ((lastW < 640) !== (window.innerWidth < 640)) renderTree(false);
+  lastW = window.innerWidth;
+});
+syncCats();
+renderTree(false);
+const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+fontsReady.then(() => renderTree(false));
+routeHash();
+</script>

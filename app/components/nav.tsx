@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const navItems = {
+const navItems: Record<string, { name: string; static?: boolean }> = {
   '/': {
     name: 'home',
   },
@@ -9,6 +9,12 @@ const navItems = {
   },
   '/teaching': {
     name: 'teaching',
+  },
+  // a static page in public/ (built by elicitation/build.py), so it gets a plain link, not a Next route;
+  // it opens in a new tab so the site stays open behind it
+  '/elicitation/': {
+    name: 'elicitation map',
+    static: true,
   },
   // '/blog': {
   //   name: 'blog',
@@ -24,15 +30,17 @@ export function Navbar() {
           id="nav"
         >
           <div className="flex flex-row space-x-0 pr-10">
-            {Object.entries(navItems).map(([path, { name }]) => {
+            {Object.entries(navItems).map(([path, { name, static: isStatic }]) => {
+              const Tag = isStatic ? 'a' : Link
               return (
-                <Link
+                <Tag
                   key={path}
                   href={path}
+                  {...(isStatic && { target: '_blank', rel: 'noopener' })}
                   className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
                 >
                   {name}
-                </Link>
+                </Tag>
               )
             })}
           </div>
