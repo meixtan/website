@@ -14,10 +14,10 @@ export const metadata: Metadata = {
     default: 'Mei Tan',
     template: 'Mei Tan | %s',
   },
-  description: 'Mei Tan - Personal Website',
+  description: 'Mei Tan is a PhD candidate at Stanford studying how language models can learn from human expertise.',
   openGraph: {
     title: 'Mei Tan - Personal Website',
-    description: '',
+    description: 'Mei Tan is a PhD candidate at Stanford studying how language models can learn from human expertise.',
     url: baseUrl,
     siteName: 'Mei Tan',
     locale: 'en_US',
