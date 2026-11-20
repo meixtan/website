@@ -29,6 +29,9 @@ export function PublicationPosts() {
               {post.metadata.slides && (
                 <Chiclet text="Slides" href={post.metadata.slides} />
               )}
+              {post.metadata.poster && (
+                <Chiclet text="Poster" href={post.metadata.poster} />
+              )}
               {post.metadata.codeData && (
                 <Chiclet text="Code" href={post.metadata.codeData} />
               )}

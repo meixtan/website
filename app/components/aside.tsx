@@ -6,7 +6,7 @@ export default function ProfilePanel() {
         <aside className="flex flex-col items-center text-center md:items-start md:text-left mb-8">
         <div className="relative h-28 w-28 overflow-hidden rounded-full ring-1 ring-gray-200">
           <RoundedImage
-            src="/sunflowers.png"
+            src="/sunflowers.jpg"
             alt="Portrait photo"
             fill
             sizes="112px"
@@ -31,14 +31,6 @@ export default function ProfilePanel() {
             className="text-sm text-gray-600 hover:text-gray-900 dark:text-neutral-100"
           >
             LinkedIn
-          </a>
-          <a
-            href="https://huggingface.co/meiflwr"
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm text-gray-600 hover:text-gray-900 dark:text-neutral-100"
-          >
-            HuggingFace
           </a>
           <a
             href="/resume.pdf"

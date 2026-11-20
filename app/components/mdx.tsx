@@ -30,6 +30,11 @@ function Table({ data }) {
 function CustomLink(props) {
   let href = props.href
 
+  // files in public/ (PDFs, images) aren't pages: open them in a new tab instead of client-side routing
+  if (href.startsWith('/') && /\.[a-z0-9]+$/i.test(href.split(/[?#]/)[0])) {
+    return <a target="_blank" rel="noopener noreferrer" {...props} />
+  }
+
   if (href.startsWith('/')) {
     return (
       <Link href={href} {...props}>

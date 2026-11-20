@@ -11,6 +11,7 @@ type PubMetadata = {
   pdf: string
   awards?: string | string[]
   slides?: string
+  poster?: string
   models?: string
   codeData?: string
   supplement?: string
